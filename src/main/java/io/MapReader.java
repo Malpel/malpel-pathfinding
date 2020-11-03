@@ -1,4 +1,9 @@
+package io;
+
+import domain.Node;
+
 import java.io.*;
+
 
 public class MapReader {
 
@@ -22,7 +27,7 @@ public class MapReader {
             stringArray[index] = st;
 
             for (int j = 0; j < st.length(); j++) {
-                Node newNode = new Node();
+                Node newNode = new Node(index, j);
                 newNode.setABlock(st.charAt(j) != '.');
                 nodeArray[index][j] = newNode;
             }
@@ -30,11 +35,11 @@ public class MapReader {
             index++;
         }
 
-        createNodes();
+        setNeighbors();
     }
 
     // this is terrible
-    private void createNodes() {
+    private void setNeighbors() {
         for (int i = 0; i < nodeArray.length; i++) {
             for (int j = 0; j < nodeArray.length; j++) {
                 Node[] neighbors = new Node[8];
@@ -43,27 +48,40 @@ public class MapReader {
                 if (i - 1 >= 0 && !nodeArray[i - 1][j].isABlock()) {
                     neighbors[n] = nodeArray[i - 1][j];
                     n++;
-                } else if (i + 1 < 256 && !nodeArray[i + 1][j].isABlock()) {
+                }
+
+                if (i + 1 < 256 && !nodeArray[i + 1][j].isABlock()) {
                     neighbors[n] = nodeArray[i + 1][j];
                     n++;
-                } else if (j - 1 >= 0 && !nodeArray[i][j - 1].isABlock()) {
+                }
+
+                if (j - 1 >= 0 && !nodeArray[i][j - 1].isABlock()) {
                     neighbors[n] = nodeArray[i][j - 1];
                     n++;
-                } else if (j + 1 < 256 && !nodeArray[i][j + 1].isABlock()) {
+                }
+
+                if (j + 1 < 256 && !nodeArray[i][j + 1].isABlock()) {
                     neighbors[n] = nodeArray[i][j + 1];
                     n++;
-                } else if (i - 1 >= 0 && j - 1 >= 0 && !nodeArray[i - 1][j - 1].isABlock()) {
+                }
+
+                if (i - 1 >= 0 && j - 1 >= 0 && !nodeArray[i - 1][j - 1].isABlock()) {
                     neighbors[n] = nodeArray[i - 1][j - 1];
                     n++;
-                } else if (i - 1 >= 0  && j + 1 < 256 && !nodeArray[i - 1][j + 1].isABlock()) {
+                }
+
+                if (i - 1 >= 0  && j + 1 < 256 && !nodeArray[i - 1][j + 1].isABlock()) {
                     neighbors[n] = nodeArray[i - 1][j + 1];
                     n++;
-                } else if (i + 1 < 256 && j - 1 >= 0 && !nodeArray[i + 1][j - 1].isABlock()) {
+                }
+
+                if (i + 1 < 256 && j - 1 >= 0 && !nodeArray[i + 1][j - 1].isABlock()) {
                     neighbors[n] = nodeArray[i + 1][j - 1];
                     n++;
-                } else if (i + 1 < 256 && j + 1 < 256 && !nodeArray[i + 1][j + 1].isABlock()) {
+                }
+
+                if (i + 1 < 256 && j + 1 < 256 && !nodeArray[i + 1][j + 1].isABlock()) {
                     neighbors[n] = nodeArray[i + 1][j + 1];
-                    n++;
                 }
 
                 nodeArray[i][j].setNeighbors(neighbors);
