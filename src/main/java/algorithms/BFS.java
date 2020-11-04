@@ -21,7 +21,6 @@ public class BFS {
         while (!queue.isEmpty()) {
             Node node = queue.poll();
 
-
             if (!visited[node.getY()][node.getX()]) {
                 visited[node.getY()][node.getX()] = true;
 
@@ -34,6 +33,7 @@ public class BFS {
                         if (neighbor.getPrevious() == null) {
                             neighbor.setPrevious(node);
                         }
+
                         queue.add(neighbor);
                     }
 
