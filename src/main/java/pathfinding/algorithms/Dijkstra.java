@@ -2,19 +2,20 @@ package pathfinding.algorithms;
 
 import pathfinding.domain.Node;
 
-import java.util.ArrayDeque;
+import java.util.PriorityQueue;
 
-public class BFS {
+public class Dijkstra {
 
-    private ArrayDeque<Node> queue;
+    private PriorityQueue<Node> queue;
     private boolean[][] visited;
 
-    public BFS() {
-        queue = new ArrayDeque<>();
+    public Dijkstra() {
+        queue = new PriorityQueue<>();
         visited = new boolean[256][256]; // size should be a parameter
     }
 
     public Node search(Node start, Node goal) {
+        start.setPathLength(0);
         queue.add(start);
 
         while (!queue.isEmpty()) {
@@ -29,17 +30,21 @@ public class BFS {
 
                 for (Node neighbor : node.getNeighbors()) {
                     if (neighbor != null) {
-                        if (neighbor.getPrevious() == null) {
-                            neighbor.setPrevious(node);
-                        }
+                        int alt = node.getPathLength() + 1;
 
-                        queue.add(neighbor);
+                        if (alt < neighbor.getPathLength()) {
+                            neighbor.setPathLength(alt);
+                            neighbor.setPrevious(node);
+                            queue.add(neighbor);
+                        }
                     }
 
                 }
             }
         }
 
+
         return start;
     }
+
 }

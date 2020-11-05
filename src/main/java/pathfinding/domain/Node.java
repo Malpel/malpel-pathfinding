@@ -7,11 +7,13 @@ public class Node implements Comparable<Node> {
     private final int y;
     private Node previous;
     private double distanceFromGoal;
+    private int pathLength;
 
     public Node(int y, int x) {
         this.x = x;
         this.y = y;
         previous = null;
+        pathLength = Integer.MAX_VALUE;
     }
 
     public Node[] getNeighbors() {
@@ -43,6 +45,14 @@ public class Node implements Comparable<Node> {
         int distanceFromX = goal.getX() - this.x;
 
         distanceFromGoal = Math.sqrt((distanceFromY * distanceFromY) + (distanceFromX * distanceFromX));
+    }
+
+    public int getPathLength() {
+        return pathLength;
+    }
+
+    public void setPathLength(int pathLength) {
+        this.pathLength = pathLength;
     }
 
     @Override

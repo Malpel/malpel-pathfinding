@@ -16,13 +16,12 @@ public class MapReader {
         nodeArray = new Node[256][256];
     }
 
-    public void createArrays() throws IOException {
+    public Node[][] createArray() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(file));
         String st;
         int index = 0;
 
         while ((st = br.readLine()) != null) {
-
             for (int j = 0; j < st.length(); j++) {
                 if (st.charAt(j) == '.') {
                     Node newNode = new Node(index, j);
@@ -34,6 +33,8 @@ public class MapReader {
         }
 
         setNeighbors();
+
+        return nodeArray;
     }
 
     // this is terrible
@@ -91,9 +92,5 @@ public class MapReader {
                 nodeArray[i][j].setNeighbors(neighbors);
             }
         }
-    }
-
-    public Node[][] getNodeArray() {
-        return nodeArray;
     }
 }
