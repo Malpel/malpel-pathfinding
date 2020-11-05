@@ -1,7 +1,9 @@
-import algorithms.Astar;
-import algorithms.BFS;
-import domain.Node;
-import io.MapReader;
+package pathfinding;
+
+import pathfinding.algorithms.Astar;
+import pathfinding.algorithms.BFS;
+import pathfinding.domain.Node;
+import pathfinding.io.MapReader;
 
 public class Main {
 
@@ -10,7 +12,6 @@ public class Main {
         MapReader mapReader = new MapReader("/home/malpel/Projects/malpel-pathfinding/src/main/resources/Paris_0_256.map");
         mapReader.createArrays();
 
-        String[] stringMap = mapReader.getStringArray();
         Node[][] nodeMap = mapReader.getNodeArray();
 
         BFS bfs = new BFS();

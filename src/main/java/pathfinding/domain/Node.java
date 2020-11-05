@@ -1,9 +1,8 @@
-package domain;
+package pathfinding.domain;
 
-public class Node implements Comparable<Node>{
+public class Node implements Comparable<Node> {
 
     private Node[] neighbors;
-    private boolean isABlock;
     private final int x;
     private final int y;
     private Node previous;
@@ -23,14 +22,6 @@ public class Node implements Comparable<Node>{
         this.neighbors = neighbors;
     }
 
-    public boolean isABlock() {
-        return isABlock;
-    }
-
-    public void setABlock(boolean ABlock) {
-        isABlock = ABlock;
-    }
-
     public int getX() {
         return x;
     }
@@ -48,18 +39,15 @@ public class Node implements Comparable<Node>{
     }
 
     public void heuristic(Node goal) {
-        int first = goal.getY() - this.y;
-        int second = goal.getX() - this.x;
+        int distanceFromY = goal.getY() - this.y;
+        int distanceFromX = goal.getX() - this.x;
 
-        distanceFromGoal = Math.sqrt((first * first) + (second * second));
+        distanceFromGoal = Math.sqrt((distanceFromY * distanceFromY) + (distanceFromX * distanceFromX));
     }
 
     @Override
     public String toString() {
-        return "Node{" +
-                "y=" + y +
-                ", x=" + x +
-                '}';
+        return "Node{" + "y=" + y + ", x=" + x + '}';
     }
 
     @Override

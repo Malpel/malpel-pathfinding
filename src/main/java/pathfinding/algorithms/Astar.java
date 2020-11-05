@@ -1,18 +1,17 @@
-package algorithms;
+package pathfinding.algorithms;
 
-import domain.Node;
+import pathfinding.domain.Node;
 
-import java.util.ArrayDeque;
-import java.util.Queue;
+import java.util.PriorityQueue;
 
-public class BFS {
+public class Astar {
 
-    private Queue<Node> queue;
+    private PriorityQueue<Node> queue;
     private boolean[][] visited;
 
-    public BFS() {
-        queue = new ArrayDeque<>();
-        visited = new boolean[256][256];
+    public Astar() {
+        queue = new PriorityQueue<>();
+        visited = new boolean[256][256]; // size should be a parameter
     }
 
     public Node search(Node start, Node goal) {
@@ -34,11 +33,12 @@ public class BFS {
                             neighbor.setPrevious(node);
                         }
 
+                        neighbor.heuristic(goal);
                         queue.add(neighbor);
                     }
-
                 }
             }
+
         }
 
         return start;

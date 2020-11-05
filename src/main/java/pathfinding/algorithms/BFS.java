@@ -1,17 +1,18 @@
-package algorithms;
+package pathfinding.algorithms;
 
-import domain.Node;
+import pathfinding.domain.Node;
 
-import java.util.PriorityQueue;
+import java.util.ArrayDeque;
+import java.util.Queue;
 
-public class Astar {
+public class BFS {
 
-    private PriorityQueue<Node> queue;
+    private Queue<Node> queue;
     private boolean[][] visited;
 
-    public Astar() {
-        queue = new PriorityQueue<>();
-        visited = new boolean[256][256];
+    public BFS() {
+        queue = new ArrayDeque<>();
+        visited = new boolean[256][256]; // size should be a parameter
     }
 
     public Node search(Node start, Node goal) {
@@ -33,12 +34,11 @@ public class Astar {
                             neighbor.setPrevious(node);
                         }
 
-                        neighbor.heuristic(goal);
                         queue.add(neighbor);
                     }
+
                 }
             }
-
         }
 
         return start;

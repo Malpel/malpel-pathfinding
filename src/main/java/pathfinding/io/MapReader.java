@@ -1,6 +1,6 @@
-package io;
+package pathfinding.io;
 
-import domain.Node;
+import pathfinding.domain.Node;
 
 import java.io.*;
 
@@ -8,13 +8,11 @@ import java.io.*;
 public class MapReader {
 
     File file;
-    String[] stringArray;
     Node[][] nodeArray;
 
-    // map size as a parameter?
+    // map size should probably be given as a parameter
     public MapReader(String pathToMap) {
         file = new File(pathToMap);
-        stringArray= new String[256];
         nodeArray = new Node[256][256];
     }
 
@@ -24,12 +22,12 @@ public class MapReader {
         int index = 0;
 
         while ((st = br.readLine()) != null) {
-            stringArray[index] = st;
 
             for (int j = 0; j < st.length(); j++) {
-                Node newNode = new Node(index, j);
-                newNode.setABlock(st.charAt(j) != '.');
-                nodeArray[index][j] = newNode;
+                if (st.charAt(j) == '.') {
+                    Node newNode = new Node(index, j);
+                    nodeArray[index][j] = newNode;
+                }
             }
 
             index++;
@@ -39,58 +37,60 @@ public class MapReader {
     }
 
     // this is terrible
+    // map size shouldn't be hard coded
     private void setNeighbors() {
         for (int i = 0; i < nodeArray.length; i++) {
             for (int j = 0; j < nodeArray.length; j++) {
+
+                if (nodeArray[i][j] == null) {
+                    continue;
+                }
+
                 Node[] neighbors = new Node[8];
                 int n = 0;
 
-                if (i - 1 >= 0 && !nodeArray[i - 1][j].isABlock()) {
+                if (i - 1 >= 0 && nodeArray[i - 1][j] != null) {
                     neighbors[n] = nodeArray[i - 1][j];
                     n++;
                 }
 
-                if (i + 1 < 256 && !nodeArray[i + 1][j].isABlock()) {
+                if (i + 1 < 256 && nodeArray[i + 1][j] != null) {
                     neighbors[n] = nodeArray[i + 1][j];
                     n++;
                 }
 
-                if (j - 1 >= 0 && !nodeArray[i][j - 1].isABlock()) {
+                if (j - 1 >= 0 && nodeArray[i][j - 1] != null) {
                     neighbors[n] = nodeArray[i][j - 1];
                     n++;
                 }
 
-                if (j + 1 < 256 && !nodeArray[i][j + 1].isABlock()) {
+                if (j + 1 < 256 && nodeArray[i][j + 1] != null) {
                     neighbors[n] = nodeArray[i][j + 1];
                     n++;
                 }
 
-                if (i - 1 >= 0 && j - 1 >= 0 && !nodeArray[i - 1][j - 1].isABlock()) {
+                if (i - 1 >= 0 && j - 1 >= 0 && nodeArray[i - 1][j - 1] != null) {
                     neighbors[n] = nodeArray[i - 1][j - 1];
                     n++;
                 }
 
-                if (i - 1 >= 0  && j + 1 < 256 && !nodeArray[i - 1][j + 1].isABlock()) {
+                if (i - 1 >= 0  && j + 1 < 256 && nodeArray[i - 1][j + 1] != null) {
                     neighbors[n] = nodeArray[i - 1][j + 1];
                     n++;
                 }
 
-                if (i + 1 < 256 && j - 1 >= 0 && !nodeArray[i + 1][j - 1].isABlock()) {
+                if (i + 1 < 256 && j - 1 >= 0 && nodeArray[i + 1][j - 1] != null) {
                     neighbors[n] = nodeArray[i + 1][j - 1];
                     n++;
                 }
 
-                if (i + 1 < 256 && j + 1 < 256 && !nodeArray[i + 1][j + 1].isABlock()) {
+                if (i + 1 < 256 && j + 1 < 256 && nodeArray[i + 1][j + 1] != null) {
                     neighbors[n] = nodeArray[i + 1][j + 1];
                 }
 
                 nodeArray[i][j].setNeighbors(neighbors);
             }
         }
-    }
-
-    public String[] getStringArray() {
-        return stringArray;
     }
 
     public Node[][] getNodeArray() {
