@@ -6,78 +6,41 @@ import pathfinding.algorithms.Dijkstra;
 import pathfinding.domain.Node;
 import pathfinding.io.MapReader;
 
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) throws Exception {
+        int mapSize = 256;
 
-        MapReader mapReader = new MapReader("/home/malpel/Projects/malpel-pathfinding/src/main/resources/Paris_0_256.map");
+        MapReader mapReader = new MapReader("/home/malpel/Projects/malpel-pathfinding/src/main/resources/Paris_0_256.map", mapSize);
         Node[][] nodeMap = mapReader.createArray();
 
-        BFS bfs = new BFS();
-        Astar astar = new Astar();
-        Dijkstra dijkstra = new Dijkstra();
+        BFS bfs = new BFS(mapSize);
+        Astar astar = new Astar(mapSize);
+        Dijkstra dijkstra = new Dijkstra(mapSize);
 
         Node start = nodeMap[0][0];
         Node goal = nodeMap[7][8];
+/*
+        List<Node> bfsPath = bfs.search(start, goal);
 
-        Node endBfs = bfs.search(start, goal);
-        Node endAstar = astar.search(start, goal);
-        Node endDijkstra = dijkstra.search(start, goal);
-
-        if (endBfs.equals(start) || endAstar.equals(start) || endDijkstra.equals(start)) {
-            System.out.println("No path.");
+        for (Node node : bfsPath) {
+            System.out.println(node);
         }
 
-        System.out.println("");
-        System.out.println("-----------------");
-        System.out.println("BFS path starting: ");
-        System.out.println("-----------------");
-        System.out.println("");
+        List<Node> dijkstraPath = dijkstra.search(start, goal);
 
-        System.out.println(endBfs);
-
-        Node previous = endBfs.getPrevious();
-
-        while (previous != start) {
-            System.out.println(previous);
-            previous = previous.getPrevious();
+        for (Node node : dijkstraPath) {
+            System.out.println(node);
         }
+*/
 
-        System.out.println(start);
+        List<Node> astarPath = astar.search(start, goal);
 
-        System.out.println("");
-        System.out.println("-----------------");
-        System.out.println("A* path starting: ");
-        System.out.println("-----------------");
-        System.out.println("");
-
-        System.out.println(endAstar);
-
-        previous = endAstar.getPrevious();
-
-        while (previous != start) {
-            System.out.println(previous);
-            previous = previous.getPrevious();
+        for (Node node : astarPath) {
+            System.out.println(node);
         }
-
-        System.out.println(start);
-
-        System.out.println("");
-        System.out.println("-----------------");
-        System.out.println("Dijkstra path starting: ");
-        System.out.println("-----------------");
-        System.out.println("");
-
-        System.out.println(endAstar);
-
-        previous = endDijkstra.getPrevious();
-
-        while (previous != start) {
-            System.out.println(previous);
-            previous = previous.getPrevious();
-        }
-
-        System.out.println(start);
 
     }
 

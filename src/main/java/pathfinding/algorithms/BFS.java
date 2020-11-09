@@ -3,18 +3,18 @@ package pathfinding.algorithms;
 import pathfinding.domain.Node;
 
 import java.util.ArrayDeque;
+import java.util.List;
 
-public class BFS {
+public class BFS extends Pathfinder {
 
     private ArrayDeque<Node> queue;
-    private boolean[][] visited;
 
-    public BFS() {
+    public BFS(int mapSize) {
+        super(mapSize);
         queue = new ArrayDeque<>();
-        visited = new boolean[256][256]; // size should be a parameter
     }
 
-    public Node search(Node start, Node goal) {
+    public List<Node> search(Node start, Node goal) {
         queue.add(start);
 
         while (!queue.isEmpty()) {
@@ -24,7 +24,7 @@ public class BFS {
                 visited[node.getY()][node.getX()] = true;
 
                 if (node.getY() == goal.getY() && node.getX() == goal.getX()) {
-                    return node;
+                    return getPath(node, start);
                 }
 
                 for (Node neighbor : node.getNeighbors()) {
@@ -40,6 +40,6 @@ public class BFS {
             }
         }
 
-        return start;
+        return null;
     }
 }

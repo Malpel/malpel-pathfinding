@@ -4,18 +4,31 @@ import pathfinding.domain.Node;
 
 import java.io.*;
 
-
+/**
+ * MapReader reads in a text form map and turns it into a Node[] array.
+ */
 public class MapReader {
 
     File file;
     Node[][] nodeArray;
 
-    // map size should probably be given as a parameter
-    public MapReader(String pathToMap) {
+    /**
+     * MapReader reads in a text form map and turns it into a Node[] array.
+     * @param pathToMap
+     * The filepath to the text map.
+     * @param mapSize
+     * The size of the map.
+     */
+    public MapReader(String pathToMap, int mapSize) {
         file = new File(pathToMap);
-        nodeArray = new Node[256][256];
+        nodeArray = new Node[mapSize][mapSize];
     }
 
+    /**
+     * Reads the map from a text file and creates a Node array based on it.
+     * @return Returns the map as Node[] array.
+     * @throws IOException
+     */
     public Node[][] createArray() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(file));
         String st;
@@ -39,6 +52,12 @@ public class MapReader {
 
     // this is terrible
     // map size shouldn't be hard coded
+
+    /**
+     * Sets the neighbors for all nodes. Checks the neighbors in all eight directions
+     *  of a two dimensional array and adds them as the node's neighbors.
+     */
+    //CHECKSTYLE:OFF
     private void setNeighbors() {
         for (int i = 0; i < nodeArray.length; i++) {
             for (int j = 0; j < nodeArray.length; j++) {
@@ -93,4 +112,5 @@ public class MapReader {
             }
         }
     }
+    //CHECKSTYLE:ON
 }

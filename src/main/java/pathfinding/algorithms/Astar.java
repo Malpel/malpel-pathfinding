@@ -2,19 +2,28 @@ package pathfinding.algorithms;
 
 import pathfinding.domain.Node;
 
+import java.util.List;
 import java.util.PriorityQueue;
 
-public class Astar {
+public class Astar extends Pathfinder {
 
     private PriorityQueue<Node> queue;
-    private boolean[][] visited;
 
-    public Astar() {
+    public Astar(int mapSize) {
+        super(mapSize);
         queue = new PriorityQueue<>();
-        visited = new boolean[256][256]; // size should be a parameter
     }
 
-    public Node search(Node start, Node goal) {
+    /**
+     * The A* star search algorithm.
+     * @param start
+     * The starting point as a node.
+     * @param goal
+     * The goal as a node.
+     * @return
+     * Returns the start node if no path can be found, else returns the end node.
+     */
+    public List<Node> search(Node start, Node goal) {
         queue.add(start);
 
         while (!queue.isEmpty()) {
@@ -24,7 +33,7 @@ public class Astar {
                 visited[node.getY()][node.getX()] = true;
 
                 if (node.getY() == goal.getY() && node.getX() == goal.getX()) {
-                    return node;
+                    return getPath(node, start);
                 }
 
                 for (Node neighbor : node.getNeighbors()) {
@@ -41,6 +50,6 @@ public class Astar {
 
         }
 
-        return start;
+        return null;
     }
 }

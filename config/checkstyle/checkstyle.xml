@@ -77,6 +77,8 @@
             <property name='allowEmptyConstructors' value='true' />
             <property name='allowEmptyMethods' value='true' />
         </module>
+
+        <module name="SuppressionCommentFilter"/>
     </module>
 
     <!-- File Length -->
@@ -88,6 +90,5 @@
     <module name="SuppressionFilter">
         <property name="file" value="${config_loc}/suppressions.xml" />
     </module>
-
 
 </module>

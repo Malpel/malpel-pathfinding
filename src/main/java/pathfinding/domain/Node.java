@@ -1,13 +1,26 @@
 package pathfinding.domain;
 
+/**
+ * Node is a representation of a point or a coordinate on the text map. Only legitimate
+ * points get turned into nodes - blocks or hindrances will be null.
+ */
 public class Node implements Comparable<Node> {
 
     private Node[] neighbors;
     private final int x;
     private final int y;
+    /**
+     * Used to build a path in reverse.
+     */
     private Node previous;
+    /**
+     * Used for A* algorithm.
+     */
     private double distanceFromGoal;
-    private int pathLength;
+    /**
+     * Used for Dijkstra's algorithm.
+     */
+    private double pathLength;
 
     public Node(int y, int x) {
         this.x = x;
@@ -40,6 +53,11 @@ public class Node implements Comparable<Node> {
         this.previous = previous;
     }
 
+    /**
+     * Calculates the distance from the goal node for the use as a heuristic in A* search.
+     * @param goal
+     * The goal node of the path.
+     */
     public void heuristic(Node goal) {
         int distanceFromY = goal.getY() - this.y;
         int distanceFromX = goal.getX() - this.x;
@@ -47,11 +65,11 @@ public class Node implements Comparable<Node> {
         distanceFromGoal = Math.sqrt((distanceFromY * distanceFromY) + (distanceFromX * distanceFromX));
     }
 
-    public int getPathLength() {
+    public double getPathLength() {
         return pathLength;
     }
 
-    public void setPathLength(int pathLength) {
+    public void setPathLength(double pathLength) {
         this.pathLength = pathLength;
     }
 
@@ -62,6 +80,6 @@ public class Node implements Comparable<Node> {
 
     @Override
     public int compareTo(Node node) {
-        return this.distanceFromGoal < node.distanceFromGoal ? 1 : 0;
+        return this.distanceFromGoal <= node.distanceFromGoal ? 1 : 0;
     }
 }
