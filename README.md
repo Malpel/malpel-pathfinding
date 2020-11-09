@@ -2,7 +2,7 @@
 
 
 [![CircleCI](https://circleci.com/gh/Malpel/malpel-pathfinding.svg?style=svg)](https://circleci.com/gh/Malpel/malpel-pathfinding)
-[![codecov](https://codecov.io/gh/Malpel/malpel-pathfinding/branch/master/graph/badge.svg)](https://codecov.io/gh/Malpel/malpel-pathfinding)
+[![codecov](https://codecov.io/gh/Malpel/malpel-pathfinding/branch/main/graph/badge.svg?token=LJB8SADPGQ)](https://codecov.io/gh/Malpel/malpel-pathfinding)
 
 
 ## Documentation
