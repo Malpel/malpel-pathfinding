@@ -32,23 +32,11 @@ public class Dijkstra extends Pathfinder {
                 for (Node neighbor : node.getNeighbors()) {
                     if (neighbor != null) {
 
-                        double alt = node.getPathLength();
-
-                        if ((neighbor.getY() - 1 == node.getY() && neighbor.getX() - 1 == node.getX())
-                        || (neighbor.getY() - 1 == node.getY() && neighbor.getX() + 1 == node.getX())
-                        || (neighbor.getY() + 1 == node.getY() && neighbor.getX() + 1 == node.getX())
-                        || (neighbor.getY() + 1 == node.getY() && neighbor.getX() - 1 == node.getX())) {
-                            alt += 1.41;
-                        } else {
-                            alt += 1;
-                        }
+                        double alt = calculatePathLength(neighbor, node);
 
                         if (alt < neighbor.getPathLength()) {
                             neighbor.setPathLength(alt);
-                            if (neighbor.getPrevious() == null) {
-                                neighbor.setPrevious(node);
-                            }
-
+                            neighbor.setPrevious(node);
                             queue.add(neighbor);
                         }
                     }
@@ -58,6 +46,21 @@ public class Dijkstra extends Pathfinder {
         }
 
         return null;
+    }
+
+    private double calculatePathLength(Node neighbor, Node node) {
+        double alt = node.getPathLength();
+
+        if ((neighbor.getY() - 1 == node.getY() && neighbor.getX() - 1 == node.getX())
+                || (neighbor.getY() - 1 == node.getY() && neighbor.getX() + 1 == node.getX())
+                || (neighbor.getY() + 1 == node.getY() && neighbor.getX() + 1 == node.getX())
+                || (neighbor.getY() + 1 == node.getY() && neighbor.getX() - 1 == node.getX())) {
+            alt += 1.41;
+        } else {
+            alt += 1;
+        }
+
+        return alt;
     }
 
     class DijkstraComparator implements Comparator<Node> {

@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         int mapSize = 256;
 
-        MapReader mapReader = new MapReader("/home/malpel/Projects/malpel-pathfinding/src/main/resources/Paris_0_256.map", mapSize);
+        MapReader mapReader = new MapReader("/Paris_0_256.map", mapSize);
         Node[][] nodeMap = mapReader.createArray();
 
         BFS bfs = new BFS(mapSize);

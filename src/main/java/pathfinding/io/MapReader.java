@@ -11,17 +11,18 @@ public class MapReader {
 
     File file;
     Node[][] nodeArray;
+    String filename;
 
     /**
      * MapReader reads in a text form map and turns it into a Node[] array.
-     * @param pathToMap
-     * The filepath to the text map.
+     * @param filename
+     * The name of the file to be read.
      * @param mapSize
-     * The size of the map.
+     * The size of the map as an integer.
      */
-    public MapReader(String pathToMap, int mapSize) {
-        file = new File(pathToMap);
+    public MapReader(String filename, int mapSize) {
         nodeArray = new Node[mapSize][mapSize];
+        file = new File(getClass().getResource(filename).getFile());
     }
 
     /**

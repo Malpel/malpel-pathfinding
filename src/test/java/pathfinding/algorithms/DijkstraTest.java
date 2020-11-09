@@ -22,7 +22,7 @@ public class DijkstraTest {
 
     @BeforeClass
     public static void readMap() {
-        MapReader mapReader = new MapReader("/home/malpel/Projects/malpel-pathfinding/src/test/resources/Paris_0_256.map", 256);
+        MapReader mapReader = new MapReader("/Paris_0_256.map", 256);
 
         try {
             nodeMap = mapReader.createArray();
