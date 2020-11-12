@@ -5,15 +5,33 @@ import pathfinding.domain.Node;
 import java.util.ArrayDeque;
 import java.util.List;
 
+/**
+ * Implementation of the breadth-first search algorithm.
+ */
 public class BFS extends Pathfinder {
 
     private ArrayDeque<Node> queue;
 
+    /**
+     * Implementation of the breadth-first search algorithm.
+     * @param mapSize
+     * Map size as an integer.
+     */
     public BFS(int mapSize) {
         super(mapSize);
         queue = new ArrayDeque<>();
     }
 
+    /**
+     * Performs the actual search.
+     * @param start
+     * The starting point of the path as a node.
+     * @param goal
+     * The end of the path as a node.
+     * @return
+     * The shortest path as a list of nodes if a path exists,
+     * otherwise null.
+     */
     public List<Node> search(Node start, Node goal) {
         queue.add(start);
 

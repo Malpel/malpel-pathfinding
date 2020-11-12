@@ -5,23 +5,32 @@ import pathfinding.domain.Node;
 import java.util.List;
 import java.util.PriorityQueue;
 
+/**
+ * Implementation of the A* search algorithm.
+ */
 public class Astar extends Pathfinder {
 
     private PriorityQueue<Node> queue;
 
+    /**
+     * Implementation of the A* search algorithm.
+     * @param mapSize
+     * Map size as an integer, used for the boolean[][] visited array.
+     */
     public Astar(int mapSize) {
         super(mapSize);
         queue = new PriorityQueue<>();
     }
 
     /**
-     * The A* star search algorithm.
+     * Performs the actual search.
      * @param start
-     * The starting point as a node.
+     * The starting point of the path as a node.
      * @param goal
-     * The goal as a node.
+     * The end of the path as a node.
      * @return
-     * Returns the start node if no path can be found, else returns the end node.
+     * The shortest path as a list of nodes if a path exists,
+     * otherwise null.
      */
     public List<Node> search(Node start, Node goal) {
         queue.add(start);

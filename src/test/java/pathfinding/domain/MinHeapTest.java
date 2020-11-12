@@ -96,6 +96,15 @@ public class MinHeapTest {
     }
 
     @Test
+    public void heapMinimumIsCorrectAfterPollingVersion4() {
+        Node[] arr = { null, n4, n2, n3, n1, start };
+        minHeap = new MinHeap(arr);
+
+        minHeap.poll();
+        assertEquals(n3, minHeap.peek());
+    }
+
+    @Test
     public void heapIsEmptyAfterPollingTheLastItem() {
         Node[] arr = { null, start };
         minHeap = new MinHeap(arr);

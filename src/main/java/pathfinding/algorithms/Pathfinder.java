@@ -14,8 +14,8 @@ public class Pathfinder {
     private final int mapSize;
 
     /**
-     * Pathfinder takes care of the boolean[][] visited array, as well as
-     * constructing the path.
+     *  A superclass for the pathfinding algorithms. Pathfinder takes care of the boolean[][] visited array,
+     *  as well as constructing the path.
      * @param mapSize
      * The map size as an integer.
      */
@@ -24,24 +24,33 @@ public class Pathfinder {
         this.mapSize = mapSize;
     }
 
+    /**
+     * Checks that neither the start nor the goal node is a null, invalid node.
+     * @param start
+     * The starting point of the path as a node.
+     * @param goal
+     * The end of the path as a node.
+     * @return
+     * True if both start and goal are valid, otherwise false.
+     */
     protected boolean nonNullNodes(Node start, Node goal) {
         return start != null && goal != null;
     }
 
     /**
      * Constructs the path in reverse order as a list.
-     * @param end
+     * @param goal
      * The goal of the path.
      * @param start
      * The start of the path.
      * @return
-     * Returns a list of the nodes on the path in reverse order.
+     * A ist of the nodes on the path in reverse order.
      */
-    protected List<Node> getPath(Node end, Node start) {
+    protected List<Node> getPath(Node goal, Node start) {
         List<Node> path = new ArrayList<>();
-        path.add(end);
+        path.add(goal);
 
-        Node node = end.getPrevious();
+        Node node = goal.getPrevious();
 
         while (node != start) {
             path.add(node);

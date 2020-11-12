@@ -22,6 +22,14 @@ public class Node implements Comparable<Node> {
      */
     private double pathLength;
 
+    /**
+     * Node is a representation of a point or a coordinate on the text map. Only legitimate
+     * points get turned into nodes - blocks or hindrances will be null.
+     * @param y
+     * The y coordinate as an integer.
+     * @param x
+     * the x coordinate as an integer.
+     */
     public Node(int y, int x) {
         this.x = x;
         this.y = y;
