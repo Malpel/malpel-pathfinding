@@ -20,7 +20,7 @@ public class MinHeap {
     public MinHeap(Node[] arr) {
         this.arr = arr;
         endPointer = arr.length;
-        size = arr.length;
+        size = arr.length - 1;
 
         checkSize();
     }
@@ -43,12 +43,14 @@ public class MinHeap {
 
     public Node poll() {
         Node minNode = arr[1];
-        arr[1] = arr[endPointer - 1];
-        arr[endPointer - 1] = null;
+        endPointer -= 1;
+
+        arr[1] = arr[endPointer];
+        arr[endPointer] = null;
 
         swapOrderPoll();
-
         size--;
+        checkSize();
 
         return minNode;
     }
@@ -75,11 +77,11 @@ public class MinHeap {
             int leftChild = parent * 2;
             int rightChild = (parent * 2) + 1;
 
-            if (arr[leftChild] == null || arr[rightChild] == null) {
+            if (breakCondition(parent, leftChild, rightChild)) {
                 break;
             }
 
-            if (arr[leftChild].compareTo(arr[parent]) > 0 && arr[rightChild].compareTo(arr[parent]) > 0) {
+            if ((arr[leftChild] != null && arr[rightChild] != null) && (arr[leftChild].compareTo(arr[parent]) > 0 && arr[rightChild].compareTo(arr[parent]) > 0)) {
                 if (arr[rightChild].compareTo(arr[leftChild]) > 0) {
                     swap(parent, rightChild);
                     parent = rightChild;
@@ -88,14 +90,24 @@ public class MinHeap {
                     parent = leftChild;
                 }
 
-            } else if (arr[leftChild].compareTo(arr[parent]) > 0) {
+            } else if (arr[leftChild] != null && arr[leftChild].compareTo(arr[parent]) > 0) {
                 swap(parent, leftChild);
                 parent = leftChild;
-            } else if (arr[rightChild].compareTo(arr[parent]) > 0) {
+            } else if (arr[rightChild] != null && arr[rightChild].compareTo(arr[parent]) > 0) {
                 swap(parent, rightChild);
                 parent = rightChild;
             }
         }
+    }
+
+    private boolean breakCondition(int parent, int leftChild, int rightChild) {
+        if (arr[leftChild] == null && arr[rightChild] == null)  {
+            return true;
+        } else if (arr[leftChild].compareTo(arr[parent]) <= 0 && arr[rightChild] == null) {
+            return true;
+        }
+
+        return arr[leftChild].compareTo(arr[parent]) <= 0 && arr[rightChild].compareTo(arr[parent]) <= 0;
     }
 
     private void swap(int parent, int child) {
@@ -105,10 +117,11 @@ public class MinHeap {
     }
 
     private void checkSize() {
-        if (size == arr.length) {
+        if (size == arr.length - 1) {
             extendArray();
         } else if (endPointer == 1 && arr[endPointer] == null) {
             isEmpty = true;
+            size = 0;
         }
     }
 

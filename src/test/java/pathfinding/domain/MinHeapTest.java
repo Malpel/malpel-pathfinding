@@ -41,11 +41,11 @@ public class MinHeapTest {
         minHeap = new MinHeap(arr);
 
         minHeap.add(n3);
-        assertEquals(5, minHeap.size());
+        assertEquals(4, minHeap.size());
     }
 
     @Test
-    public void heapIsOrderedCorrectlyAfterAddition() {
+    public void heapMinimumIsCorrectAfterAddition() {
         Node[] arr = { null, n1, start };
         minHeap = new MinHeap(arr);
 
@@ -61,20 +61,48 @@ public class MinHeapTest {
 
     @Test
     public void pollingAffectsSize() {
-        Node[] arr = { null, n4, n2, n1, start };
+        Node[] arr = { null, n1, start };
         minHeap = new MinHeap(arr);
 
         minHeap.poll();
-        assertEquals(4, minHeap.size());
+        assertEquals(1, minHeap.size());
     }
 
     @Test
-    public void heapIsOrderedCorrectlyAfterPolling() {
+    public void heapMinimumIsCorrectAfterPolling() {
         Node[] arr = { null, n4, n2, n1, start };
         minHeap = new MinHeap(arr);
 
         minHeap.poll();
-
         assertEquals(n2, minHeap.peek());
+    }
+
+    @Test
+    public void heapMinimumIsCorrectAfterPollingVersion2() {
+        Node[] arr = { null, n4, n1, n3, start, n2 };
+        minHeap = new MinHeap(arr);
+
+        minHeap.poll();
+        assertEquals(n3, minHeap.peek());
+    }
+
+    @Test
+    public void heapMinimumIsCorrectAfterPollingVersion3() {
+        Node[] arr = { null, n4, n3, n1, start, n2 };
+        minHeap = new MinHeap(arr);
+
+        minHeap.poll();
+        assertEquals(n3, minHeap.peek());
+    }
+
+    @Test
+    public void heapIsEmptyAfterPollingTheLastItem() {
+        Node[] arr = { null, start };
+        minHeap = new MinHeap(arr);
+
+        minHeap.poll();
+
+        assertEquals(0, minHeap.size());
+        assertTrue(minHeap.isEmpty());
     }
 }
