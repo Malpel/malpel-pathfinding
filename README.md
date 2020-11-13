@@ -11,3 +11,4 @@
 ## Progress reports
 - [Progress report 1](https://github.com/Malpel/malpel-pathfinding/blob/main/Documentation/Progress_report_1.md)
 - [Progress report 2](https://github.com/Malpel/malpel-pathfinding/blob/main/Documentation/Progress_report_2.md)
+- [Progress report 3](https://github.com/Malpel/malpel-pathfinding/blob/main/Documentation/Progress_report_3.md)

@@ -113,7 +113,7 @@ public class MinHeap {
                 break;
             }
 
-            if ((arr[leftChild] != null && arr[rightChild] != null) && (arr[leftChild].compareTo(arr[parent]) > 0 && arr[rightChild].compareTo(arr[parent]) > 0)) {
+            if (arr[leftChild].compareTo(arr[parent]) > 0 && arr[rightChild].compareTo(arr[parent]) > 0) {
                 if (arr[rightChild].compareTo(arr[leftChild]) > 0) {
                     swap(parent, rightChild);
                     parent = rightChild;
@@ -122,10 +122,10 @@ public class MinHeap {
                     parent = leftChild;
                 }
 
-            } else if (arr[leftChild] != null && arr[leftChild].compareTo(arr[parent]) > 0) {
+            } else if (arr[leftChild].compareTo(arr[parent]) > 0) {
                 swap(parent, leftChild);
                 parent = leftChild;
-            } else if (arr[rightChild] != null && arr[rightChild].compareTo(arr[parent]) > 0) {
+            } else if (arr[rightChild].compareTo(arr[parent]) > 0) {
                 swap(parent, rightChild);
                 parent = rightChild;
             }
