@@ -61,6 +61,7 @@ public class JPS extends Pathfinder {
         return successors;
     }
 
+    //CHECKSTYLE:OFF
     private Node jump(Node previous, Node current, Node goal) {
 
         if (current == null || current.isVisited()) {
@@ -112,6 +113,8 @@ public class JPS extends Pathfinder {
 
         return jump(current, map.getNode(y + dy, x + dx), goal);
     }
+
+    //CHECKSTYLE:ON
 
     private List<Node> pruneNeighbors(Node node) {
         List<Node> prunedNeighbors = new ArrayList<>();
