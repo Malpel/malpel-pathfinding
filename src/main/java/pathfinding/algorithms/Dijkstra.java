@@ -41,8 +41,8 @@ public class Dijkstra extends Pathfinder {
         while (!queue.isEmpty()) {
             Node node = queue.poll();
 
-            if (!visited[node.getY()][node.getX()]) {
-                visited[node.getY()][node.getX()] = true;
+            if (!node.isVisited()) {
+                node.setVisited(true);
 
                 if (node.getY() == goal.getY() && node.getX() == goal.getX()) {
                     return getPath(node, start);
@@ -95,7 +95,7 @@ public class Dijkstra extends Pathfinder {
      * A custom comparator for the priority queue.
      * Compares path lengths.
      */
-    class DijkstraComparator implements Comparator<Node> {
+    static class DijkstraComparator implements Comparator<Node> {
 
         @Override
         public int compare(Node node, Node t1) {

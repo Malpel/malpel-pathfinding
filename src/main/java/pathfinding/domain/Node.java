@@ -1,12 +1,14 @@
 package pathfinding.domain;
 
+import java.util.List;
+
 /**
  * Node is a representation of a point or a coordinate on the text map. Only legitimate
  * points get turned into nodes - blocks or hindrances will be null.
  */
 public class Node implements Comparable<Node> {
 
-    private Node[] neighbors;
+    private List<Node> neighbors;
     private final int x;
     private final int y;
     /**
@@ -21,6 +23,8 @@ public class Node implements Comparable<Node> {
      * Used for Dijkstra's algorithm.
      */
     private double pathLength;
+
+    private boolean visited;
 
     /**
      * Node is a representation of a point or a coordinate on the text map. Only legitimate
@@ -37,11 +41,11 @@ public class Node implements Comparable<Node> {
         pathLength = Integer.MAX_VALUE;
     }
 
-    public Node[] getNeighbors() {
+    public List<Node> getNeighbors() {
         return neighbors;
     }
 
-    public void setNeighbors(Node[] neighbors) {
+    public void setNeighbors(List<Node> neighbors) {
         this.neighbors = neighbors;
     }
 
@@ -79,6 +83,14 @@ public class Node implements Comparable<Node> {
 
     public void setPathLength(double pathLength) {
         this.pathLength = pathLength;
+    }
+
+    public boolean isVisited() {
+        return visited;
+    }
+
+    public void setVisited(boolean visited) {
+        this.visited = visited;
     }
 
     @Override
