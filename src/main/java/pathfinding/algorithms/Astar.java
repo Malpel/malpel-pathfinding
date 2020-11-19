@@ -16,6 +16,7 @@ public class Astar extends Pathfinder {
      * Implementation of the A* search algorithm.
      */
     public Astar() {
+        super();
     }
 
     /**
@@ -29,7 +30,7 @@ public class Astar extends Pathfinder {
      * otherwise null.
      */
     public List<Node> search(Node start, Node goal) {
-        queue = new PriorityQueue<>();
+        queue = new PriorityQueue<Node>();
         queue.add(start);
 
         while (!queue.isEmpty()) {

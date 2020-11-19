@@ -71,10 +71,14 @@ public class Node implements Comparable<Node> {
      * The goal node of the path.
      */
     public void heuristic(Node goal) {
-        int distanceFromY = goal.getY() - this.y;
-        int distanceFromX = goal.getX() - this.x;
+        int distanceFromY = Math.abs(goal.getY() - this.y);
+        int distanceFromX = Math.abs(goal.getX() - this.x);
 
         distanceFromGoal = Math.sqrt((distanceFromY * distanceFromY) + (distanceFromX * distanceFromX));
+    }
+
+    public double getDistanceFromGoal() {
+        return distanceFromGoal;
     }
 
     public double getPathLength() {
@@ -100,6 +104,6 @@ public class Node implements Comparable<Node> {
 
     @Override
     public int compareTo(Node node) {
-        return this.distanceFromGoal <= node.distanceFromGoal ? 1 : 0;
+        return Double.compare(this.distanceFromGoal, node.getDistanceFromGoal());
     }
 }

@@ -18,7 +18,7 @@ public class MinHeap {
      * Implementation of a binary minimum heap.
      */
     public MinHeap() {
-        arr = new Node[25];
+        arr = new Node[10];
         endPointer = 1;
         size = 0;
     }
@@ -88,7 +88,7 @@ public class MinHeap {
         int parent = endPointer / 2;
         int child = endPointer;
 
-        while (arr[child].compareTo(arr[parent]) > 0) {
+        while (arr[child].compareTo(arr[parent]) <= 0) {
             swap(child, parent);
             child = parent;
             parent = parent / 2;
@@ -113,8 +113,8 @@ public class MinHeap {
                 break;
             }
 
-            if (arr[leftChild].compareTo(arr[parent]) > 0 && arr[rightChild].compareTo(arr[parent]) > 0) {
-                if (arr[rightChild].compareTo(arr[leftChild]) > 0) {
+            if (arr[leftChild].compareTo(arr[parent]) <= 0 && arr[rightChild].compareTo(arr[parent]) <= 0) {
+                if (arr[rightChild].compareTo(arr[leftChild]) <= 0) {
                     swap(parent, rightChild);
                     parent = rightChild;
                 } else {
@@ -122,10 +122,10 @@ public class MinHeap {
                     parent = leftChild;
                 }
 
-            } else if (arr[leftChild].compareTo(arr[parent]) > 0) {
+            } else if (arr[leftChild].compareTo(arr[parent]) <= 0) {
                 swap(parent, leftChild);
                 parent = leftChild;
-            } else if (arr[rightChild].compareTo(arr[parent]) > 0) {
+            } else if (arr[rightChild].compareTo(arr[parent]) <= 0) {
                 swap(parent, rightChild);
                 parent = rightChild;
             }
@@ -146,11 +146,11 @@ public class MinHeap {
     private boolean breakCondition(int parent, int leftChild, int rightChild) {
         if (arr[leftChild] == null && arr[rightChild] == null)  {
             return true;
-        } else if (arr[leftChild].compareTo(arr[parent]) <= 0 && arr[rightChild] == null) {
+        } else if (arr[leftChild].compareTo(arr[parent]) > 0 && arr[rightChild] == null) {
             return true;
         }
 
-        return arr[leftChild].compareTo(arr[parent]) <= 0 && arr[rightChild].compareTo(arr[parent]) <= 0;
+        return arr[leftChild].compareTo(arr[parent]) > 0 && arr[rightChild].compareTo(arr[parent]) > 0;
     }
 
     /**
@@ -182,7 +182,6 @@ public class MinHeap {
     /**
      * Creates a bigger array and copies the elements of the old array into it.
      */
-    // try this with own implementation instead of System.arraycopy
     private void extendArray() {
         Node[] newArray = new Node[arr.length * 2];
         System.arraycopy(arr, 1, newArray, 1, arr.length - 1);

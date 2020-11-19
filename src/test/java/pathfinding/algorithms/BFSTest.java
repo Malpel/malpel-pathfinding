@@ -60,6 +60,16 @@ public class BFSTest {
     }
 
     @Test
+    public void longerPathIsCorrectLength() {
+        start = nodeMap.getNode(78, 59);
+        goal = nodeMap.getNode(84, 90);
+
+        List<Node> bfsPath = bfs.search(start, goal);
+
+        assertEquals(43, bfsPath.size());
+    }
+
+    @Test
     public void noPathIfGoalUnreachable() {
         start = nodeMap.getNode(123, 33);
         goal = nodeMap.getNode(123, 38);

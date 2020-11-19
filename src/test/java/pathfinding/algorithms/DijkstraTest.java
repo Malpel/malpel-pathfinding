@@ -45,18 +45,28 @@ public class DijkstraTest {
         List<Node> correctPath = new ArrayList<>();
 
         correctPath.add(nodeMap.getNode(7, 8));
-        correctPath.add(nodeMap.getNode(7, 7));
-        correctPath.add(nodeMap.getNode(6, 6));
-        correctPath.add(nodeMap.getNode(5, 5));
-        correctPath.add(nodeMap.getNode(4, 4));
-        correctPath.add(nodeMap.getNode(3, 3));
-        correctPath.add(nodeMap.getNode(2, 2));
-        correctPath.add(nodeMap.getNode(1, 1));
+        correctPath.add(nodeMap.getNode(6, 7));
+        correctPath.add(nodeMap.getNode(5, 6));
+        correctPath.add(nodeMap.getNode(4, 5));
+        correctPath.add(nodeMap.getNode(3, 4));
+        correctPath.add(nodeMap.getNode(2, 3));
+        correctPath.add(nodeMap.getNode(1, 2));
+        correctPath.add(nodeMap.getNode(0, 1));
         correctPath.add(nodeMap.getNode(0, 0));
 
         List<Node> dijkstraPath = dijkstra.search(start, goal);
 
         assertEquals(correctPath, dijkstraPath);
+    }
+
+    @Test
+    public void longerPathIsCorrectLength() {
+        start = nodeMap.getNode(78, 59);
+        goal = nodeMap.getNode(84, 90);
+
+        List<Node> dijkstraPath = dijkstra.search(start, goal);
+
+        assertEquals(43, dijkstraPath.size());
     }
 
     @Test

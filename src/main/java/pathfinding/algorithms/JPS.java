@@ -13,8 +13,8 @@ import java.util.PriorityQueue;
  */
 public class JPS extends Pathfinder {
 
-    PriorityQueue<Node> queue;
-    NodeMap map;
+    private PriorityQueue<Node> queue;
+    private NodeMap map;
 
     /**
      * Implementation of the Jump Point search algorithm.
@@ -22,6 +22,7 @@ public class JPS extends Pathfinder {
      * The map as a NodeMap.
      */
     public JPS(NodeMap nodeMap) {
+        super();
         this.map = nodeMap;
     }
 
@@ -52,8 +53,14 @@ public class JPS extends Pathfinder {
                 List<Node> successors = identifySuccessors(node, start, goal);
 
                 for (Node s : successors) {
-                    s.heuristic(goal);
-                    queue.add(s);
+                    if (s != null) {
+                        if (s.getPrevious() == null) {
+                            s.setPrevious(node);
+                        }
+
+                        s.heuristic(goal);
+                        queue.add(s);
+                    }
                 }
 
             }
@@ -83,6 +90,13 @@ public class JPS extends Pathfinder {
             if (jumpPoint != null) {
                 successors.add(jumpPoint);
             }
+        }
+
+        // because of the fact that this solves
+        // my problems, I think that the algorithm
+        // doesn't actually work the way it's supposed to
+        if (successors.isEmpty()) {
+            successors = node.getNeighbors();
         }
 
         return successors;
@@ -133,8 +147,8 @@ public class JPS extends Pathfinder {
             if (jump(current, map.getNode(y, x + dx), goal) != null) {
                 return current;
             }
-            // vertical
-        } else if (dx == 0) {
+
+        } else if (dy == 0) {
             if (!map.isAccessible(y - dy, x + 1) && map.isAccessible(y, x + 1)) {
                 return current;
             }
@@ -142,7 +156,7 @@ public class JPS extends Pathfinder {
             if (!map.isAccessible(y - dy, x - 1) && map.isAccessible(y, x - 1)) {
                 return current;
             }
-            // horizontal
+
         } else {
             if (!map.isAccessible(y + 1, x - dx) && map.isAccessible(y + 1, x)) {
                 return current;
@@ -152,7 +166,6 @@ public class JPS extends Pathfinder {
                 return current;
             }
         }
-
 
         return jump(current, map.getNode(y + dy, x + dx), goal);
     }
@@ -182,7 +195,6 @@ public class JPS extends Pathfinder {
         } else {
             getNeighborsForCardinal(node.getY(), node.getX(), dy, dx, prunedNeighbors);
         }
-
 
         return prunedNeighbors;
     }
@@ -215,12 +227,12 @@ public class JPS extends Pathfinder {
         }
 
         // forced neighbors
-        if (!map.isAccessible(y + dy, x) && map.isAccessible(y, x - dx) && map.isAccessible(y + dy, x - dx)) {
-            list.add(map.getNode(x - dx, y + dy));
+        if (!map.isAccessible(y, x - dx) && map.isAccessible(y + dy, x) && map.isAccessible(y + dy, x - dx)) {
+            list.add(map.getNode(y + dy, x - dx));
         }
 
         if (!map.isAccessible(y - dy, x) && map.isAccessible(y, x + dx) && map.isAccessible(y - dy, x + dx)) {
-            list.add(map.getNode(x + dx, y - dy));
+            list.add(map.getNode(y - dy, x + dx));
         }
     }
 

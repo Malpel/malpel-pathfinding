@@ -18,6 +18,7 @@ public class Dijkstra extends Pathfinder {
      * Implementation of Dijkstra's shortest path algorithm using a priority queue.
      */
     public Dijkstra() {
+        super();
         queue = new PriorityQueue<>(10, new DijkstraComparator());
     }
 
@@ -48,13 +49,13 @@ public class Dijkstra extends Pathfinder {
                 for (Node neighbor : node.getNeighbors()) {
                     if (neighbor != null) {
 
-                        double alt = calculatePathLength(neighbor, node);
+                        handlePathLength(node, neighbor);
 
-                        if (alt < neighbor.getPathLength()) {
-                            neighbor.setPathLength(alt);
+                        if (neighbor.getPrevious() == null) {
                             neighbor.setPrevious(node);
-                            queue.add(neighbor);
                         }
+
+                        queue.add(neighbor);
                     }
 
                 }
@@ -62,6 +63,14 @@ public class Dijkstra extends Pathfinder {
         }
 
         return null;
+    }
+
+    private void handlePathLength(Node node, Node neighbor) {
+        double alt = calculatePathLength(neighbor, node);
+
+        if (alt < neighbor.getPathLength()) {
+            neighbor.setPathLength(alt);
+        }
     }
 
     /**
@@ -96,7 +105,12 @@ public class Dijkstra extends Pathfinder {
 
         @Override
         public int compare(Node node, Node t1) {
-            return node.getPathLength() <= t1.getPathLength() ? 1 : 0;
+            if (node.getPathLength() > t1.getPathLength()) {
+                return 1;
+            } else if (node.getPathLength() == t1.getPathLength()) {
+                return 0;
+            }
+            return -1;
         }
     }
 

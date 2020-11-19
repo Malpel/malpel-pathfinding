@@ -16,6 +16,7 @@ public class BFS extends Pathfinder {
      * Implementation of the breadth-first search algorithm.
      */
     public BFS() {
+        super();
     }
 
     /**
