@@ -34,7 +34,7 @@ public class BFSTest {
 
     @Before
     public void init() {
-         bfs = new BFS(256);
+         bfs = new BFS();
     }
 
     @Test

@@ -19,10 +19,10 @@ public class Main {
 
         NodeMap nodeMap = mapReader.createNodeMap();
 
-        BFS bfs = new BFS(mapSize);
-        Astar astar = new Astar(mapSize);
-        Dijkstra dijkstra = new Dijkstra(mapSize);
-        JPS jps = new JPS(mapSize, nodeMap);
+        BFS bfs = new BFS();
+        Astar astar = new Astar();
+        Dijkstra dijkstra = new Dijkstra();
+        JPS jps = new JPS(nodeMap);
 
         Node start = nodeMap.getNode(0, 0);
         Node goal = nodeMap.getNode(7, 8);

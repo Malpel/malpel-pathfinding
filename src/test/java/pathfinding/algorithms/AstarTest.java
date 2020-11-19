@@ -34,7 +34,7 @@ public class AstarTest {
 
     @Before
     public void init() {
-        astar = new Astar(256);
+        astar = new Astar();
     }
 
     @Test

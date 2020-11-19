@@ -10,18 +10,11 @@ import java.util.List;
  */
 public class Pathfinder {
 
-    protected boolean[][] visited;
-    private final int mapSize;
-
     /**
-     *  A superclass for the pathfinding algorithms. Pathfinder takes care of the boolean[][] visited array,
-     *  as well as constructing the path.
-     * @param mapSize
-     * The map size as an integer.
+     *  A superclass for the pathfinding algorithms. Pathfinder takes care of checking
+     *  the starting and goal's validity (not null) as well as constructing the path.
      */
-    public Pathfinder(int mapSize) {
-        visited = new boolean[mapSize][mapSize];
-        this.mapSize = mapSize;
+    public Pathfinder() {
     }
 
     /**
@@ -60,9 +53,5 @@ public class Pathfinder {
         path.add(start);
 
         return path;
-    }
-
-    protected void resetVisited() {
-        visited = new boolean[mapSize][mapSize];
     }
 }

@@ -16,20 +16,17 @@ public class Dijkstra extends Pathfinder {
 
     /**
      * Implementation of Dijkstra's shortest path algorithm using a priority queue.
-     * @param mapSize
-     * Map size as an integer, used for the boolean[][] visited array.
      */
-    public Dijkstra(int mapSize) {
-        super(mapSize);
+    public Dijkstra() {
         queue = new PriorityQueue<>(10, new DijkstraComparator());
     }
 
     /**
      * Performs the actual search.
      * @param start
-     * The starting point of the path as a node.
+     * The starting point of the path as a Node.
      * @param goal
-     * The end of the path as a node.
+     * The goal of the path as a Node.
      * @return
      * The shortest path as a list of nodes if a path exists,
      * otherwise null.

@@ -14,9 +14,9 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-public class DijkstraTest {
+public class JPSTest {
 
-    Dijkstra dijkstra;
+    JPS jps;
     static NodeMap nodeMap;
     Node start;
     Node goal;
@@ -34,7 +34,7 @@ public class DijkstraTest {
 
     @Before
     public void init() {
-        dijkstra = new Dijkstra();
+        jps = new JPS(nodeMap);
     }
 
     @Test
@@ -54,9 +54,9 @@ public class DijkstraTest {
         correctPath.add(nodeMap.getNode(1, 1));
         correctPath.add(nodeMap.getNode(0, 0));
 
-        List<Node> dijkstraPath = dijkstra.search(start, goal);
+        List<Node> jpsPath = jps.search(start, goal);
 
-        assertEquals(correctPath, dijkstraPath);
+        assertEquals(correctPath, jpsPath);
     }
 
     @Test
@@ -64,8 +64,8 @@ public class DijkstraTest {
         start = nodeMap.getNode(123, 33);
         goal = nodeMap.getNode(123, 38);
 
-        List<Node> dijkstraPath = dijkstra.search(start, goal);
+        List<Node> jpsPath = jps.search(start, goal);
 
-        assertNull(dijkstraPath);
+        assertNull(jpsPath);
     }
 }

@@ -14,32 +14,29 @@ public class BFS extends Pathfinder {
 
     /**
      * Implementation of the breadth-first search algorithm.
-     * @param mapSize
-     * Map size as an integer.
      */
-    public BFS(int mapSize) {
-        super(mapSize);
-        queue = new ArrayDeque<>();
+    public BFS() {
     }
 
     /**
      * Performs the actual search.
      * @param start
-     * The starting point of the path as a node.
+     * The starting point of the path as a Node.
      * @param goal
-     * The end of the path as a node.
+     * The goal of the path as a Node.
      * @return
      * The shortest path as a list of nodes if a path exists,
      * otherwise null.
      */
     public List<Node> search(Node start, Node goal) {
+        queue = new ArrayDeque<>();
         queue.add(start);
 
         while (!queue.isEmpty()) {
             Node node = queue.poll();
 
-            if (!visited[node.getY()][node.getX()]) {
-                visited[node.getY()][node.getX()] = true;
+            if (!node.isVisited()) {
+                node.setVisited(true);
 
                 if (node.getY() == goal.getY() && node.getX() == goal.getX()) {
                     return getPath(node, start);

@@ -8,19 +8,35 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 
+/**
+ * Implementation of the Jump Point search algorithm.
+ */
 public class JPS extends Pathfinder {
 
     PriorityQueue<Node> queue;
     NodeMap map;
 
-    public JPS(int mapSize, NodeMap nodeMap) {
-        super(mapSize);
-        // should be in search
-        queue = new PriorityQueue<>();
+    /**
+     * Implementation of the Jump Point search algorithm.
+     * @param nodeMap
+     * The map as a NodeMap.
+     */
+    public JPS(NodeMap nodeMap) {
         this.map = nodeMap;
     }
 
+    /**
+     * Performs the actual search.
+     * @param start
+     * The starting point of the path as a Node.
+     * @param goal
+     * The goal of the path as a Node.
+     * @return
+     * The shortest path as a list of nodes if a path exists,
+     * otherwise null.
+     */
     public List<Node> search(Node start, Node goal) {
+        queue = new PriorityQueue<>();
         queue.add(start);
 
         while (!queue.isEmpty()) {
@@ -46,6 +62,17 @@ public class JPS extends Pathfinder {
         return null;
     }
 
+    /**
+     * Selects the nodes that can be jumped to.
+     * @param node
+     * The current node.
+     * @param start
+     * The start of the path.
+     * @param goal
+     * The goal of the path.
+     * @return
+     * List of successor nodes.
+     */
     private List<Node> identifySuccessors(Node node, Node start, Node goal) {
         List<Node> successors = new ArrayList<>();
         List<Node> neighbors = pruneNeighbors(node);
@@ -61,6 +88,18 @@ public class JPS extends Pathfinder {
         return successors;
     }
 
+    // not splitting this into smaller parts
+    /**
+     * Finds the available jump points on the path.
+     * @param previous
+     * The previous node.
+     * @param current
+     * The node in examination.
+     * @param goal
+     * The goal of the path.
+     * @return
+     * A jump point, or null if no jump point possible.
+     */
     //CHECKSTYLE:OFF
     private Node jump(Node previous, Node current, Node goal) {
 
@@ -81,9 +120,11 @@ public class JPS extends Pathfinder {
         int y = current.getY();
         int x = current.getX();
 
+        // direction for y- and x-axes.
         int dy = clamp(y - previous.getY(), -1, 1);
         int dx = clamp(x - previous.getX(), -1, 1);
 
+        // diagonal
         if (dy != 0 && dx != 0) {
             if (jump(current, map.getNode(y + dy, x), goal) != null) {
                 return current;
@@ -92,6 +133,7 @@ public class JPS extends Pathfinder {
             if (jump(current, map.getNode(y, x + dx), goal) != null) {
                 return current;
             }
+            // vertical
         } else if (dx == 0) {
             if (!map.isAccessible(y - dy, x + 1) && map.isAccessible(y, x + 1)) {
                 return current;
@@ -100,6 +142,7 @@ public class JPS extends Pathfinder {
             if (!map.isAccessible(y - dy, x - 1) && map.isAccessible(y, x - 1)) {
                 return current;
             }
+            // horizontal
         } else {
             if (!map.isAccessible(y + 1, x - dx) && map.isAccessible(y + 1, x)) {
                 return current;
@@ -113,9 +156,16 @@ public class JPS extends Pathfinder {
 
         return jump(current, map.getNode(y + dy, x + dx), goal);
     }
-
     //CHECKSTYLE:ON
 
+    /**
+     * Prunes the neighbors list down to neighbors in the direction of movement.
+     * Takes into consideration both natural and forced neighbors.
+     * @param node
+     * Node under examination.
+     * @return
+     * A list of neighbors in the direction of movement.
+     */
     private List<Node> pruneNeighbors(Node node) {
         List<Node> prunedNeighbors = new ArrayList<>();
 
@@ -137,6 +187,19 @@ public class JPS extends Pathfinder {
         return prunedNeighbors;
     }
 
+    /**
+     * Finds the neighbors when going diagonally.
+     * @param y
+     * The y coordinate of the node as an integer.
+     * @param x
+     * The x coordinate of the node as an integer.
+     * @param dy
+     * The direction on the y-axis.
+     * @param dx
+     * The direction on the x-axis.
+     * @param list
+     * The to which neighbors will added.
+     */
     private void getNeighborsForDiagonal(int y, int x, int dy, int dx, List<Node> list) {
         // natural neighbors
         if (map.isAccessible(y + dy, x)) {
@@ -161,6 +224,19 @@ public class JPS extends Pathfinder {
         }
     }
 
+    /**
+     * Finds the neighbors when going in a cardinal direction.
+     * @param y
+     * The y coordinate of the node as an integer.
+     * @param x
+     * The x coordinate of the node as an integer.
+     * @param dy
+     * The direction on the y-axis.
+     * @param dx
+     * The direction on the x-axis.
+     * @param list
+     * The to which neighbors will added.
+     */
     private void getNeighborsForCardinal(int y, int x, int dy, int dx, List<Node> list) {
         if (dy == 0) {
             // natural

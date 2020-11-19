@@ -13,7 +13,7 @@ public class PathfinderTest {
 
     @BeforeClass
     public static void createPathfinder() {
-        pathfinder = new Pathfinder(256);
+        pathfinder = new Pathfinder();
     }
 
     @Test
@@ -32,13 +32,5 @@ public class PathfinderTest {
         Node real2 = new Node(101, 231);
 
         assertTrue(pathfinder.nonNullNodes(real1, real2));
-    }
-
-    @Test
-    public void visitedIsReset() {
-        pathfinder.visited[34][34] = true;
-        pathfinder.resetVisited();
-
-        assertFalse(pathfinder.visited[34][34]);
     }
 }
