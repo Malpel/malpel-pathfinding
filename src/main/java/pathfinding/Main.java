@@ -24,12 +24,16 @@ public class Main {
         Dijkstra dijkstra = new Dijkstra();
         JPS jps = new JPS(nodeMap);
 
+        // the format is (y, x), NOT (x, y)
         // 78, 59
         Node start = nodeMap.getNode(78, 59);
         // 84, 90
         Node goal = nodeMap.getNode(84, 90);
 
         // 43 is the path length of the above
+
+        // These cannot be run all in one go,
+        // doesn't reset nodes in between.
 /*
         List<Node> bfsPath = bfs.search(start, goal);
 
@@ -59,12 +63,12 @@ public class Main {
 */
 
         List<Node> jpsPath = jps.search(start, goal);
+
         System.out.println("");
 
         for (Node node : jpsPath) {
             System.out.println(node);
         }
-
 
         System.out.println(jpsPath.size());
 

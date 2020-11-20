@@ -85,8 +85,6 @@ public class JPS extends Pathfinder {
             Node jumpPoint = jump(node, n, goal);
 
             if (jumpPoint != null) {
-                System.out.println("Node: " + node);
-                System.out.println("Jump point: " + jumpPoint);
                 successors.add(jumpPoint);
             }
         }
