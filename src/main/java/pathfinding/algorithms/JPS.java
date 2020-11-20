@@ -50,7 +50,7 @@ public class JPS extends Pathfinder {
                     return getPath(node, start);
                 }
 
-                List<Node> successors = identifySuccessors(node, start, goal);
+                List<Node> successors = identifySuccessors(node, goal);
 
                 for (Node s : successors) {
                     if (s != null) {
@@ -62,7 +62,6 @@ public class JPS extends Pathfinder {
                         queue.add(s);
                     }
                 }
-
             }
         }
 
@@ -73,14 +72,12 @@ public class JPS extends Pathfinder {
      * Selects the nodes that can be jumped to.
      * @param node
      * The current node.
-     * @param start
-     * The start of the path.
      * @param goal
      * The goal of the path.
      * @return
      * List of successor nodes.
      */
-    private List<Node> identifySuccessors(Node node, Node start, Node goal) {
+    private List<Node> identifySuccessors(Node node, Node goal) {
         List<Node> successors = new ArrayList<>();
         List<Node> neighbors = pruneNeighbors(node);
 
@@ -88,15 +85,10 @@ public class JPS extends Pathfinder {
             Node jumpPoint = jump(node, n, goal);
 
             if (jumpPoint != null) {
+                System.out.println("Node: " + node);
+                System.out.println("Jump point: " + jumpPoint);
                 successors.add(jumpPoint);
             }
-        }
-
-        // because of the fact that this solves
-        // my problems, I think that the algorithm
-        // doesn't actually work the way it's supposed to
-        if (successors.isEmpty()) {
-            successors = node.getNeighbors();
         }
 
         return successors;
@@ -140,30 +132,37 @@ public class JPS extends Pathfinder {
 
         // diagonal
         if (dy != 0 && dx != 0) {
-            if (jump(current, map.getNode(y + dy, x), goal) != null) {
+            if ((map.isAccessible(y - dx, x + dx)) && !map.isAccessible(y - dy, x)
+            || (map.isAccessible(y + dy, x - dx)) && !map.isAccessible(y, x - dx)
+            || (!map.isAccessible(y +dy, x)) && !map.isAccessible(y, x + dx)) {
+
                 return current;
+
             }
 
-            if (jump(current, map.getNode(y, x + dx), goal) != null) {
-                return current;
-            }
+            // the special case for diagonals
+            if (jump(current, map.getNode(y + dy, x), goal) != null
+                    || jump(current, map.getNode(y, x + dx), goal) != null) {
 
-        } else if (dy == 0) {
-            if (!map.isAccessible(y - dy, x + 1) && map.isAccessible(y, x + 1)) {
-                return current;
-            }
-
-            if (!map.isAccessible(y - dy, x - 1) && map.isAccessible(y, x - 1)) {
                 return current;
             }
 
         } else {
-            if (!map.isAccessible(y + 1, x - dx) && map.isAccessible(y + 1, x)) {
-                return current;
-            }
 
-            if (!map.isAccessible(y - 1, x - dx) && map.isAccessible(y - 1, x)) {
-                return current;
+            // vertical
+            if (dx == 0) {
+                if ((map.isAccessible(y + dy, x + 1) && !map.isAccessible(y, x + 1))
+                || (map.isAccessible(y + dy, x - 1) && !map.isAccessible(y, x - 1))) {
+
+                    return current;
+                }
+                // horizontal
+            } else {
+                if ((map.isAccessible(y + 1, x + dx) && !map.isAccessible(y + 1, x))
+                || (map.isAccessible(y - 1, x + dx) && !map.isAccessible(y - 1, x))) {
+
+                    return current;
+                }
             }
         }
 

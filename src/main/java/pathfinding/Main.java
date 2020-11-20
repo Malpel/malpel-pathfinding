@@ -59,10 +59,12 @@ public class Main {
 */
 
         List<Node> jpsPath = jps.search(start, goal);
+        System.out.println("");
 
         for (Node node : jpsPath) {
             System.out.println(node);
         }
+
 
         System.out.println(jpsPath.size());
 
