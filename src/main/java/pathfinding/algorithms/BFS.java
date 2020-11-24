@@ -1,16 +1,13 @@
 package pathfinding.algorithms;
 
+import pathfinding.domain.Deque;
 import pathfinding.domain.Node;
-
-import java.util.ArrayDeque;
-import java.util.List;
+import pathfinding.domain.List;
 
 /**
  * Implementation of the breadth-first search algorithm.
  */
 public class BFS extends Pathfinder {
-
-    private ArrayDeque<Node> queue;
 
     /**
      * Implementation of the breadth-first search algorithm.
@@ -29,12 +26,12 @@ public class BFS extends Pathfinder {
      * The shortest path as a list of nodes if a path exists,
      * otherwise null.
      */
-    public List<Node> search(Node start, Node goal) {
-        queue = new ArrayDeque<>();
-        queue.add(start);
+    public List search(Node start, Node goal) {
+        Deque queue = new Deque();
+        queue.enqueue(start);
 
         while (!queue.isEmpty()) {
-            Node node = queue.poll();
+            Node node = queue.dequeue();
 
             if (!node.isVisited()) {
                 node.setVisited(true);
@@ -43,15 +40,16 @@ public class BFS extends Pathfinder {
                     return getPath(node, start);
                 }
 
-                for (Node neighbor : node.getNeighbors()) {
-                    if (neighbor != null) {
+                for (int i = 0; i < node.getNeighbors().size(); i++) {
+                    Node neighbor = node.getNeighbors().get(i);
+
+                    if (neighbor != null && !neighbor.isVisited()) {
                         if (neighbor.getPrevious() == null) {
                             neighbor.setPrevious(node);
                         }
 
-                        queue.add(neighbor);
+                        queue.enqueue(neighbor);
                     }
-
                 }
             }
         }

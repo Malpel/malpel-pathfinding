@@ -1,5 +1,7 @@
 package pathfinding.domain;
 
+import java.util.Arrays;
+
 /**
  * Implementation of the list datastructure.
  */
@@ -52,7 +54,7 @@ public class List {
      */
     private void extendArray() {
         Node[] newArray = new Node[arr.length * 2];
-        System.arraycopy(arr, 0, newArray, 0, arr.length - 1);
+        System.arraycopy(arr, 0, newArray, 0, arr.length);
         arr = newArray;
     }
 
@@ -64,4 +66,22 @@ public class List {
         return endPointer;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        List list = (List) o;
+        return Arrays.equals(arr, list.arr);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(arr);
+    }
 }

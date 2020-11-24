@@ -6,10 +6,10 @@ import org.junit.Test;
 import pathfinding.domain.Node;
 import pathfinding.domain.NodeMap;
 import pathfinding.io.MapReader;
+import pathfinding.domain.List;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -42,7 +42,7 @@ public class BFSTest {
         start = nodeMap.getNode(0, 0);
         goal = nodeMap.getNode(7, 8);
 
-        List<Node> correctPath = new ArrayList<>();
+        List correctPath = new List();
 
         correctPath.add(nodeMap.getNode(7, 8));
         correctPath.add(nodeMap.getNode(6, 7));
@@ -54,7 +54,7 @@ public class BFSTest {
         correctPath.add(nodeMap.getNode(0, 1));
         correctPath.add(nodeMap.getNode(0, 0));
 
-        List<Node> bfsPath = bfs.search(start, goal);
+        List bfsPath = bfs.search(start, goal);
 
         assertEquals(correctPath, bfsPath);
     }
@@ -64,7 +64,7 @@ public class BFSTest {
         start = nodeMap.getNode(78, 59);
         goal = nodeMap.getNode(84, 90);
 
-        List<Node> bfsPath = bfs.search(start, goal);
+        List bfsPath = bfs.search(start, goal);
 
         assertEquals(43, bfsPath.size());
     }
@@ -74,7 +74,7 @@ public class BFSTest {
         start = nodeMap.getNode(123, 33);
         goal = nodeMap.getNode(123, 38);
 
-        List<Node> bfsPath = bfs.search(start, goal);
+        List bfsPath = bfs.search(start, goal);
 
         assertNull(bfsPath);
     }

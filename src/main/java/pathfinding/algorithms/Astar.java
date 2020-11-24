@@ -1,16 +1,13 @@
 package pathfinding.algorithms;
 
+import pathfinding.domain.MinHeap;
 import pathfinding.domain.Node;
-
-import java.util.List;
-import java.util.PriorityQueue;
+import pathfinding.domain.List;
 
 /**
  * Implementation of the A* search algorithm.
  */
 public class Astar extends Pathfinder {
-
-    private PriorityQueue<Node> queue;
 
     /**
      * Implementation of the A* search algorithm.
@@ -29,8 +26,8 @@ public class Astar extends Pathfinder {
      * The shortest path as a list of nodes if a path exists,
      * otherwise null.
      */
-    public List<Node> search(Node start, Node goal) {
-        queue = new PriorityQueue<Node>();
+    public List search(Node start, Node goal) {
+        MinHeap queue = new MinHeap();
         queue.add(start);
 
         while (!queue.isEmpty()) {
@@ -43,7 +40,9 @@ public class Astar extends Pathfinder {
                     return getPath(node, start);
                 }
 
-                for (Node neighbor : node.getNeighbors()) {
+                for (int i = 0; i < node.getNeighbors().size(); i++) {
+                    Node neighbor = node.getNeighbors().get(i);
+
                     if (neighbor != null) {
                         if (neighbor.getPrevious() == null) {
                             neighbor.setPrevious(node);
@@ -54,7 +53,6 @@ public class Astar extends Pathfinder {
                     }
                 }
             }
-
         }
 
         return null;

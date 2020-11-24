@@ -1,6 +1,5 @@
 package pathfinding.domain;
 
-import java.util.List;
 
 /**
  * Node is a representation of a point or a coordinate on the text map. Only legitimate
@@ -8,7 +7,7 @@ import java.util.List;
  */
 public class Node implements Comparable<Node> {
 
-    private List<Node> neighbors;
+    private List neighbors;
     private final int x;
     private final int y;
     /**
@@ -41,11 +40,11 @@ public class Node implements Comparable<Node> {
         pathLength = Integer.MAX_VALUE;
     }
 
-    public List<Node> getNeighbors() {
+    public List getNeighbors() {
         return neighbors;
     }
 
-    public void setNeighbors(List<Node> neighbors) {
+    public void setNeighbors(List neighbors) {
         this.neighbors = neighbors;
     }
 
@@ -105,5 +104,15 @@ public class Node implements Comparable<Node> {
     @Override
     public int compareTo(Node node) {
         return Double.compare(this.distanceFromGoal, node.getDistanceFromGoal());
+    }
+
+    /**
+     * Resets information that was modified in
+     * a search back to their defaults.
+     */
+    public void reset() {
+        pathLength = Integer.MAX_VALUE;
+        previous = null;
+        visited = false;
     }
 }

@@ -1,20 +1,16 @@
 package pathfinding.algorithms;
 
+import pathfinding.domain.MinHeap;
 import pathfinding.domain.Node;
 import pathfinding.domain.NodeMap;
-
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.PriorityQueue;
+import pathfinding.domain.List;
 
 /**
  * Implementation of the Jump Point search algorithm.
  */
 public class JPS extends Pathfinder {
 
-    private PriorityQueue<Node> queue;
-    private NodeMap map;
+    private final NodeMap map;
 
     /**
      * Implementation of the Jump Point search algorithm.
@@ -36,8 +32,8 @@ public class JPS extends Pathfinder {
      * The shortest path as a list of nodes if a path exists,
      * otherwise null.
      */
-    public List<Node> search(Node start, Node goal) {
-        queue = new PriorityQueue<>();
+    public List search(Node start, Node goal) {
+        MinHeap queue = new MinHeap();
         queue.add(start);
 
         while (!queue.isEmpty()) {
@@ -50,9 +46,11 @@ public class JPS extends Pathfinder {
                     return getPath(node, start);
                 }
 
-                List<Node> successors = identifySuccessors(node, goal);
+                List successors = identifySuccessors(node, goal);
 
-                for (Node s : successors) {
+                for (int i = 0; i < successors.size(); i++) {
+                    Node s = successors.get(i);
+
                     if (s != null) {
                         if (s.getPrevious() == null) {
                             s.setPrevious(node);
@@ -77,12 +75,12 @@ public class JPS extends Pathfinder {
      * @return
      * List of successor nodes.
      */
-    private List<Node> identifySuccessors(Node node, Node goal) {
-        List<Node> successors = new ArrayList<>();
-        List<Node> neighbors = pruneNeighbors(node);
+    private List identifySuccessors(Node node, Node goal) {
+        List successors = new List();
+        List neighbors = pruneNeighbors(node);
 
-        for (Node n : neighbors) {
-            Node jumpPoint = jump(node, n, goal);
+        for (int i = 0; i < neighbors.size(); i++) {
+            Node jumpPoint = jump(node, neighbors.get(i), goal);
 
             if (jumpPoint != null) {
                 successors.add(jumpPoint);
@@ -176,8 +174,8 @@ public class JPS extends Pathfinder {
      * @return
      * A list of neighbors in the direction of movement.
      */
-    private List<Node> pruneNeighbors(Node node) {
-        List<Node> prunedNeighbors = new ArrayList<>();
+    private List pruneNeighbors(Node node) {
+        List prunedNeighbors = new List();
 
         // starting node, all nodes "acceptable"
         if (node.getPrevious() == null) {
@@ -209,7 +207,7 @@ public class JPS extends Pathfinder {
      * @param list
      * The to which neighbors will added.
      */
-    private void getNeighborsForDiagonal(int y, int x, int dy, int dx, List<Node> list) {
+    private void getNeighborsForDiagonal(int y, int x, int dy, int dx, List list) {
         // natural neighbors
         if (map.isAccessible(y + dy, x)) {
             list.add(map.getNode(y + dy, x));
@@ -246,7 +244,7 @@ public class JPS extends Pathfinder {
      * @param list
      * The to which neighbors will added.
      */
-    private void getNeighborsForCardinal(int y, int x, int dy, int dx, List<Node> list) {
+    private void getNeighborsForCardinal(int y, int x, int dy, int dx, List list) {
         if (dy == 0) {
             // natural
             if (map.isAccessible(y, x + dx)) {

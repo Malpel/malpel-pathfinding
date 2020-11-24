@@ -2,10 +2,10 @@ package pathfinding.io;
 
 import pathfinding.domain.Node;
 import pathfinding.domain.NodeMap;
+import pathfinding.domain.List;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+
 
 /**
  * MapReader reads in a text form map and turns it into a Node[] array.
@@ -15,6 +15,7 @@ public class MapReader {
     File file;
     NodeMap nodeMap;
     String filename;
+    int mapSize;
 
     /**
      * MapReader reads in a text form map and turns it into a Node[] array.
@@ -26,6 +27,7 @@ public class MapReader {
     public MapReader(String filename, int mapSize) {
         nodeMap = new NodeMap(mapSize, mapSize);
         file = new File(getClass().getResource(filename).getFile());
+        this.mapSize = mapSize;
     }
 
     /**
@@ -54,9 +56,6 @@ public class MapReader {
         return nodeMap;
     }
 
-    // this is terrible
-    // map size shouldn't be hard coded
-
     /**
      * Sets the neighbors for all nodes. Checks the neighbors in all eight directions
      *  of a two dimensional array and adds them as the node's neighbors.
@@ -70,37 +69,37 @@ public class MapReader {
                     continue;
                 }
 
-                List<Node> neighbors = new ArrayList<>();
+                List neighbors = new List();
 
-                if (i - 1 >= 0) {
+                if (nodeMap.isAccessible(i - 1, j)) {
                     neighbors.add(nodeMap.getNode(i - 1, j));
                 }
 
-                if (i + 1 < 256) {
+                if (nodeMap.isAccessible(i + 1, j)) {
                     neighbors.add(nodeMap.getNode(i + 1, j));
                 }
 
-                if (j - 1 >= 0) {
+                if (nodeMap.isAccessible(i, j - 1)) {
                     neighbors.add(nodeMap.getNode(i, j - 1));
                 }
 
-                if (j + 1 < 256) {
+                if (nodeMap.isAccessible(i, j + 1)) {
                     neighbors.add(nodeMap.getNode(i, j + 1));
                 }
 
-                if (i - 1 >= 0 && j - 1 >= 0) {
-                    neighbors.add(nodeMap.getNode(i - 1, j  -1));
+                if (nodeMap.isAccessible(i - 1, j - 1)) {
+                    neighbors.add(nodeMap.getNode(i - 1, j - 1));
                 }
 
-                if (i - 1 >= 0  && j + 1 < 256) {
+                if (nodeMap.isAccessible(i - 1, j + 1)) {
                     neighbors.add(nodeMap.getNode(i - 1, j + 1));
                 }
 
-                if (i + 1 < 256 && j - 1 >= 0) {
+                if (nodeMap.isAccessible(i + 1, j - 1)) {
                     neighbors.add(nodeMap.getNode(i + 1, j - 1));
                 }
 
-                if (i + 1 < 256 && j + 1 < 256) {
+                if (nodeMap.isAccessible(i + 1, j + 1)) {
                     neighbors.add(nodeMap.getNode(i + 1, j + 1));
                 }
 

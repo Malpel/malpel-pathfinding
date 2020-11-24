@@ -1,9 +1,8 @@
 package pathfinding.algorithms;
 
+import pathfinding.domain.List;
 import pathfinding.domain.Node;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A superclass for the pathfinding algorithms.
@@ -39,8 +38,8 @@ public class Pathfinder {
      * @return
      * A ist of the nodes on the path in reverse order.
      */
-    protected List<Node> getPath(Node goal, Node start) {
-        List<Node> path = new ArrayList<>();
+    protected List getPath(Node goal, Node start) {
+        List path = new List();
         path.add(goal);
 
         Node node = goal.getPrevious();

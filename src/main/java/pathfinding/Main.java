@@ -7,8 +7,7 @@ import pathfinding.algorithms.JPS;
 import pathfinding.domain.Node;
 import pathfinding.domain.NodeMap;
 import pathfinding.io.MapReader;
-
-import java.util.List;
+import pathfinding.domain.List;
 
 public class Main {
 
@@ -40,7 +39,7 @@ public class Main {
         for (Node node : bfsPath) {
             System.out.println(node);
         }
-        System.out.println(bfsPath.size());
+        System.out.println("Path length: " +  bfsPath.size());
 
         List<Node> dijkstraPath = dijkstra.search(start, goal);
 
@@ -48,7 +47,7 @@ public class Main {
             System.out.println(node);
         }
 
-        System.out.println(dijkstraPath.size());
+        System.out.println("Path length: " + dijkstraPath.size());
 
 
 *//*
@@ -58,19 +57,19 @@ public class Main {
             System.out.println(node);
         }
 
-        System.out.println(astarPath.size());
-
+        System.out.println("Path length: " +  astarPath.size());
 */
 
-        List<Node> jpsPath = jps.search(start, goal);
+
+        List jpsPath = jps.search(start, goal);
 
         System.out.println("");
 
-        for (Node node : jpsPath) {
-            System.out.println(node);
+        for (int i = 0; i < jpsPath.size(); i++) {
+            System.out.println(jpsPath.get(i));
         }
 
-        System.out.println(jpsPath.size());
+        System.out.println("Path length: " + jpsPath.size());
 
     }
 }

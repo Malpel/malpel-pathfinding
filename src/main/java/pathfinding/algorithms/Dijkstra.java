@@ -1,10 +1,10 @@
 package pathfinding.algorithms;
 
+import pathfinding.domain.MinHeap;
 import pathfinding.domain.Node;
+import pathfinding.domain.List;
 
 import java.util.Comparator;
-import java.util.List;
-import java.util.PriorityQueue;
 
 /**
  * Implementation of Dijkstra's shortest path algorithm using a priority queue.
@@ -12,14 +12,14 @@ import java.util.PriorityQueue;
 
 public class Dijkstra extends Pathfinder {
 
-    private PriorityQueue<Node> queue;
+    private final MinHeap queue;
 
     /**
      * Implementation of Dijkstra's shortest path algorithm using a priority queue.
      */
     public Dijkstra() {
         super();
-        queue = new PriorityQueue<>(10, new DijkstraComparator());
+        queue = new MinHeap(new DijkstraComparator());
     }
 
     /**
@@ -32,7 +32,7 @@ public class Dijkstra extends Pathfinder {
      * The shortest path as a list of nodes if a path exists,
      * otherwise null.
      */
-    public List<Node> search(Node start, Node goal) {
+    public List search(Node start, Node goal) {
         start.setPathLength(0);
         queue.add(start);
 
@@ -46,8 +46,10 @@ public class Dijkstra extends Pathfinder {
                     return getPath(node, start);
                 }
 
-                for (Node neighbor : node.getNeighbors()) {
-                    if (neighbor != null) {
+                for (int i = 0; i < node.getNeighbors().size(); i++) {
+                    Node neighbor = node.getNeighbors().get(i);
+
+                    if (neighbor != null && !neighbor.isVisited()) {
 
                         handlePathLength(node, neighbor);
 
@@ -57,8 +59,9 @@ public class Dijkstra extends Pathfinder {
 
                         queue.add(neighbor);
                     }
-
                 }
+
+
             }
         }
 
@@ -105,6 +108,10 @@ public class Dijkstra extends Pathfinder {
 
         @Override
         public int compare(Node node, Node t1) {
+            if (node == null || t1 == null) {
+                return 1;
+            }
+
             if (node.getPathLength() > t1.getPathLength()) {
                 return 1;
             } else if (node.getPathLength() == t1.getPathLength()) {
@@ -113,5 +120,4 @@ public class Dijkstra extends Pathfinder {
             return -1;
         }
     }
-
 }

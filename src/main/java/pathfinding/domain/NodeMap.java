@@ -79,4 +79,17 @@ public class NodeMap {
     public int getHeight() {
         return height;
     }
+
+    /**
+     * Resets all nodes.
+     */
+    public void resetNodes() {
+        for (Node[] nodes : arr) {
+            for (Node n : nodes) {
+                if (n != null) {
+                    n.reset();
+                }
+            }
+        }
+    }
 }
