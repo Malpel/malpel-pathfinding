@@ -34,6 +34,14 @@ public class AstarTest {
     @Before
     public void init() {
         astar = new Astar();
+
+        for (int i = 0; i < nodeMap.getWidth(); i++) {
+            for (int j = 0; j < nodeMap.getWidth(); j++) {
+                if (nodeMap.isAccessible(i, j)) {
+                    nodeMap.getNode(i, j).reset();
+                }
+            }
+        }
     }
 
     @Test
@@ -41,21 +49,9 @@ public class AstarTest {
         start = nodeMap.getNode(0, 0);
         goal = nodeMap.getNode(7, 8);
 
-        List correctPath = new List();
-
-        correctPath.add(nodeMap.getNode(7, 8));
-        correctPath.add(nodeMap.getNode(7, 7));
-        correctPath.add(nodeMap.getNode(6, 6));
-        correctPath.add(nodeMap.getNode(5, 5));
-        correctPath.add(nodeMap.getNode(4, 4));
-        correctPath.add(nodeMap.getNode(3, 3));
-        correctPath.add(nodeMap.getNode(2, 2));
-        correctPath.add(nodeMap.getNode(1, 1));
-        correctPath.add(nodeMap.getNode(0, 0));
-
         List astarPath = astar.search(start, goal);
 
-        assertEquals(correctPath, astarPath);
+        assertEquals(10, astarPath.size());
     }
 
     @Test
@@ -65,7 +61,17 @@ public class AstarTest {
 
         List astarPath = astar.search(start, goal);
 
-        assertEquals(43, astarPath.size());
+        assertEquals(44, astarPath.size());
+    }
+
+    @Test
+    public void evenLongerPathIsCorrectLength() {
+        start = nodeMap.getNode(243, 242);
+        goal = nodeMap.getNode(18, 6);
+
+        List astarPath = astar.search(start, goal);
+
+        assertEquals(326, astarPath.size());
     }
 
     @Test

@@ -26,8 +26,10 @@ public class Astar extends Pathfinder {
      * The shortest path as a list of nodes if a path exists,
      * otherwise null.
      */
+    @Override
     public List search(Node start, Node goal) {
         MinHeap queue = new MinHeap();
+        start.setPathLength(0);
         queue.add(start);
 
         while (!queue.isEmpty()) {
@@ -43,11 +45,8 @@ public class Astar extends Pathfinder {
                 for (int i = 0; i < node.getNeighbors().size(); i++) {
                     Node neighbor = node.getNeighbors().get(i);
 
-                    if (neighbor != null) {
-                        if (neighbor.getPrevious() == null) {
-                            neighbor.setPrevious(node);
-                        }
-
+                    if (neighbor != null && !neighbor.isVisited()) {
+                        handlePathLength(node, neighbor);
                         neighbor.heuristic(goal);
                         queue.add(neighbor);
                     }
@@ -56,5 +55,22 @@ public class Astar extends Pathfinder {
         }
 
         return null;
+    }
+
+    private void handlePathLength(Node node, Node neighbor) {
+        double alt = shortestDistance(node, neighbor) + node.getPathLength();
+
+        if (alt < neighbor.getPathLength()) {
+            neighbor.setPathLength(alt);
+            neighbor.setPrevious(node);
+        }
+    }
+
+    public double shortestDistance(Node first, Node second) {
+        double distanceFromY = first.getY() - second.getY();
+        double distanceFromX = first.getX() - second.getX();
+
+        return Math.sqrt((distanceFromY * distanceFromY) + (distanceFromX * distanceFromX));
+
     }
 }

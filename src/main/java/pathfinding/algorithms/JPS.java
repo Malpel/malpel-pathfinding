@@ -5,6 +5,7 @@ import pathfinding.domain.Node;
 import pathfinding.domain.NodeMap;
 import pathfinding.domain.List;
 
+
 /**
  * Implementation of the Jump Point search algorithm.
  */
@@ -32,8 +33,10 @@ public class JPS extends Pathfinder {
      * The shortest path as a list of nodes if a path exists,
      * otherwise null.
      */
+    @Override
     public List search(Node start, Node goal) {
         MinHeap queue = new MinHeap();
+        start.setPathLength(0);
         queue.add(start);
 
         while (!queue.isEmpty()) {
@@ -49,16 +52,7 @@ public class JPS extends Pathfinder {
                 List successors = identifySuccessors(node, goal);
 
                 for (int i = 0; i < successors.size(); i++) {
-                    Node s = successors.get(i);
-
-                    if (s != null) {
-                        if (s.getPrevious() == null) {
-                            s.setPrevious(node);
-                        }
-
-                        s.heuristic(goal);
-                        queue.add(s);
-                    }
+                    queue.add(successors.get(i));
                 }
             }
         }
@@ -83,6 +77,15 @@ public class JPS extends Pathfinder {
             Node jumpPoint = jump(node, neighbors.get(i), goal);
 
             if (jumpPoint != null) {
+                jumpPoint.heuristic(goal);
+
+                double alt = shortestDistance(node, jumpPoint) + node.getPathLength();
+
+                if (alt < jumpPoint.getPathLength()) {
+                    jumpPoint.setPathLength(alt);
+                    jumpPoint.setPrevious(node);
+                }
+
                 successors.add(jumpPoint);
             }
         }
@@ -113,8 +116,6 @@ public class JPS extends Pathfinder {
             return null;
         }
 
-        current.setPrevious(previous);
-
         if (current.getY() == goal.getY() && current.getX() == goal.getX()) {
             return current;
         }
@@ -128,15 +129,7 @@ public class JPS extends Pathfinder {
 
         // diagonal
         if (dy != 0 && dx != 0) {
-            if ((map.isAccessible(y - dx, x + dx)) && !map.isAccessible(y - dy, x)
-            || (map.isAccessible(y + dy, x - dx)) && !map.isAccessible(y, x - dx)
-            || (!map.isAccessible(y +dy, x)) && !map.isAccessible(y, x + dx)) {
 
-                return current;
-
-            }
-
-            // the special case for diagonals
             if (jump(current, map.getNode(y + dy, x), goal) != null
                     || jump(current, map.getNode(y, x + dx), goal) != null) {
 
@@ -286,6 +279,14 @@ public class JPS extends Pathfinder {
         }
 
         return a;
+    }
+
+    public double shortestDistance(Node first, Node second) {
+        double distanceFromY = first.getY() - second.getY();
+        double distanceFromX = first.getX() - second.getX();
+
+        return Math.sqrt((distanceFromY * distanceFromY) + (distanceFromX * distanceFromX));
+
     }
 
 }

@@ -34,6 +34,14 @@ public class JPSTest {
     @Before
     public void init() {
         jps = new JPS(nodeMap);
+
+        for (int i = 0; i < nodeMap.getWidth(); i++) {
+            for (int j = 0; j < nodeMap.getWidth(); j++) {
+                if (nodeMap.isAccessible(i, j)) {
+                    nodeMap.getNode(i, j).reset();
+                }
+            }
+        }
     }
 
     @Test
@@ -41,21 +49,9 @@ public class JPSTest {
         start = nodeMap.getNode(0, 0);
         goal = nodeMap.getNode(7, 8);
 
-        List correctPath = new List();
+        jps.search(start, goal);
 
-        correctPath.add(nodeMap.getNode(7, 8));
-        correctPath.add(nodeMap.getNode(7, 7));
-        correctPath.add(nodeMap.getNode(6, 6));
-        correctPath.add(nodeMap.getNode(5, 5));
-        correctPath.add(nodeMap.getNode(4, 4));
-        correctPath.add(nodeMap.getNode(3, 3));
-        correctPath.add(nodeMap.getNode(2, 2));
-        correctPath.add(nodeMap.getNode(1, 1));
-        correctPath.add(nodeMap.getNode(0, 0));
-
-        List jpsPath = jps.search(start, goal);
-
-        assertEquals(correctPath, jpsPath);
+        assertEquals(10, jps.pathLength(start, goal));
     }
 
     @Test
@@ -63,9 +59,19 @@ public class JPSTest {
         start = nodeMap.getNode(78, 59);
         goal = nodeMap.getNode(84, 90);
 
-        List jpsPath = jps.search(start, goal);
+        jps.search(start, goal);
 
-        assertEquals(43, jpsPath.size());
+        assertEquals(44, jps.pathLength(start, goal));
+    }
+
+    @Test
+    public void evenLongerPathIsCorrectLength() {
+        start = nodeMap.getNode(243, 242);
+        goal = nodeMap.getNode(18, 6);
+
+        jps.search(start, goal);
+
+        assertEquals(326, jps.pathLength(start, goal));
     }
 
     @Test

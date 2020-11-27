@@ -26,6 +26,7 @@ public class BFS extends Pathfinder {
      * The shortest path as a list of nodes if a path exists,
      * otherwise null.
      */
+    @Override
     public List search(Node start, Node goal) {
         Deque queue = new Deque();
         queue.enqueue(start);

@@ -34,6 +34,14 @@ public class DijkstraTest {
     @Before
     public void init() {
         dijkstra = new Dijkstra();
+
+        for (int i = 0; i < nodeMap.getWidth(); i++) {
+            for (int j = 0; j < nodeMap.getWidth(); j++) {
+                if (nodeMap.isAccessible(i, j)) {
+                    nodeMap.getNode(i, j).reset();
+                }
+            }
+        }
     }
 
     @Test
@@ -41,21 +49,9 @@ public class DijkstraTest {
         start = nodeMap.getNode(0, 0);
         goal = nodeMap.getNode(7, 8);
 
-        List correctPath = new List();
-
-        correctPath.add(nodeMap.getNode(7, 8));
-        correctPath.add(nodeMap.getNode(6, 7));
-        correctPath.add(nodeMap.getNode(5, 6));
-        correctPath.add(nodeMap.getNode(4, 5));
-        correctPath.add(nodeMap.getNode(3, 4));
-        correctPath.add(nodeMap.getNode(2, 3));
-        correctPath.add(nodeMap.getNode(1, 2));
-        correctPath.add(nodeMap.getNode(0, 1));
-        correctPath.add(nodeMap.getNode(0, 0));
-
         List dijkstraPath = dijkstra.search(start, goal);
 
-        assertEquals(correctPath, dijkstraPath);
+        assertEquals(10, dijkstraPath.size());
     }
 
     @Test
@@ -65,7 +61,17 @@ public class DijkstraTest {
 
         List dijkstraPath = dijkstra.search(start, goal);
 
-        assertEquals(43, dijkstraPath.size());
+        assertEquals(44, dijkstraPath.size());
+    }
+
+    @Test
+    public void evenLongerPathIsCorrectLength() {
+        start = nodeMap.getNode(243, 242);
+        goal = nodeMap.getNode(18, 6);
+
+        List dijkstraPath = dijkstra.search(start, goal);
+
+        assertEquals(326, dijkstraPath.size());
     }
 
     @Test

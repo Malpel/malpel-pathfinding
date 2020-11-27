@@ -24,6 +24,7 @@ public class Node implements Comparable<Node> {
     private double pathLength;
 
     private boolean visited;
+    private boolean onThePath;
 
     /**
      * Node is a representation of a point or a coordinate on the text map. Only legitimate
@@ -70,10 +71,11 @@ public class Node implements Comparable<Node> {
      * The goal node of the path.
      */
     public void heuristic(Node goal) {
-        int distanceFromY = Math.abs(goal.getY() - this.y);
-        int distanceFromX = Math.abs(goal.getX() - this.x);
+        double distanceFromY = goal.getY() - this.y;
+        double distanceFromX = goal.getX() - this.x;
 
         distanceFromGoal = Math.sqrt((distanceFromY * distanceFromY) + (distanceFromX * distanceFromX));
+
     }
 
     public double getDistanceFromGoal() {
@@ -114,5 +116,13 @@ public class Node implements Comparable<Node> {
         pathLength = Integer.MAX_VALUE;
         previous = null;
         visited = false;
+    }
+
+    public boolean isOnThePath() {
+        return onThePath;
+    }
+
+    public void setOnThePath(boolean onThePath) {
+        this.onThePath = onThePath;
     }
 }

@@ -32,6 +32,7 @@ public class Dijkstra extends Pathfinder {
      * The shortest path as a list of nodes if a path exists,
      * otherwise null.
      */
+    @Override
     public List search(Node start, Node goal) {
         start.setPathLength(0);
         queue.add(start);
@@ -50,18 +51,10 @@ public class Dijkstra extends Pathfinder {
                     Node neighbor = node.getNeighbors().get(i);
 
                     if (neighbor != null && !neighbor.isVisited()) {
-
                         handlePathLength(node, neighbor);
-
-                        if (neighbor.getPrevious() == null) {
-                            neighbor.setPrevious(node);
-                        }
-
                         queue.add(neighbor);
                     }
                 }
-
-
             }
         }
 
@@ -69,35 +62,19 @@ public class Dijkstra extends Pathfinder {
     }
 
     private void handlePathLength(Node node, Node neighbor) {
-        double alt = calculatePathLength(neighbor, node);
+        double alt = shortestDistance(node, neighbor) + node.getPathLength();
 
         if (alt < neighbor.getPathLength()) {
             neighbor.setPathLength(alt);
+            neighbor.setPrevious(node);
         }
     }
+    public double shortestDistance(Node first, Node second) {
+        double distanceFromY = first.getY() - second.getY();
+        double distanceFromX = first.getX() - second.getX();
 
-    /**
-     * Calculates the path length to the neighboring node.
-     * @param neighbor
-     * A neighboring node of the current node.
-     * @param node
-     * The current node in processing.
-     * @return
-     * The path length to the neighboring node as a double.
-     */
-    private double calculatePathLength(Node neighbor, Node node) {
-        double alt = node.getPathLength();
+        return Math.sqrt((distanceFromY * distanceFromY) + (distanceFromX * distanceFromX));
 
-        if ((neighbor.getY() - 1 == node.getY() && neighbor.getX() - 1 == node.getX())
-                || (neighbor.getY() - 1 == node.getY() && neighbor.getX() + 1 == node.getX())
-                || (neighbor.getY() + 1 == node.getY() && neighbor.getX() + 1 == node.getX())
-                || (neighbor.getY() + 1 == node.getY() && neighbor.getX() - 1 == node.getX())) {
-            alt += 1.41;
-        } else {
-            alt += 1;
-        }
-
-        return alt;
     }
 
     /**

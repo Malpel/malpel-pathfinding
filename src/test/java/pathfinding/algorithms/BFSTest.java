@@ -35,6 +35,14 @@ public class BFSTest {
     @Before
     public void init() {
          bfs = new BFS();
+
+        for (int i = 0; i < nodeMap.getWidth(); i++) {
+            for (int j = 0; j < nodeMap.getWidth(); j++) {
+                if (nodeMap.isAccessible(i, j)) {
+                    nodeMap.getNode(i, j).reset();
+                }
+            }
+        }
     }
 
     @Test
@@ -42,21 +50,9 @@ public class BFSTest {
         start = nodeMap.getNode(0, 0);
         goal = nodeMap.getNode(7, 8);
 
-        List correctPath = new List();
-
-        correctPath.add(nodeMap.getNode(7, 8));
-        correctPath.add(nodeMap.getNode(6, 7));
-        correctPath.add(nodeMap.getNode(5, 6));
-        correctPath.add(nodeMap.getNode(4, 5));
-        correctPath.add(nodeMap.getNode(3, 4));
-        correctPath.add(nodeMap.getNode(2, 3));
-        correctPath.add(nodeMap.getNode(1, 2));
-        correctPath.add(nodeMap.getNode(0, 1));
-        correctPath.add(nodeMap.getNode(0, 0));
-
         List bfsPath = bfs.search(start, goal);
 
-        assertEquals(correctPath, bfsPath);
+        assertEquals(10, bfsPath.size());
     }
 
     @Test
@@ -66,7 +62,17 @@ public class BFSTest {
 
         List bfsPath = bfs.search(start, goal);
 
-        assertEquals(43, bfsPath.size());
+        assertEquals(44, bfsPath.size());
+    }
+
+    @Test
+    public void evenLongerPathIsCorrectLength() {
+        start = nodeMap.getNode(243, 242);
+        goal = nodeMap.getNode(18, 6);
+
+        List bfsPath = bfs.search(start, goal);
+
+        assertEquals(326, bfsPath.size());
     }
 
     @Test

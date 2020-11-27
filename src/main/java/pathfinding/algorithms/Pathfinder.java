@@ -7,7 +7,7 @@ import pathfinding.domain.Node;
 /**
  * A superclass for the pathfinding algorithms.
  */
-public class Pathfinder {
+public abstract class Pathfinder {
 
     /**
      *  A superclass for the pathfinding algorithms. Pathfinder takes care of checking
@@ -30,27 +30,49 @@ public class Pathfinder {
     }
 
     /**
-     * Constructs the path in reverse order as a list.
-     * @param goal
-     * The goal of the path.
-     * @param start
-     * The start of the path.
-     * @return
-     * A ist of the nodes on the path in reverse order.
+     * MIGHT GET REMOVED IN THE NEXT PATCH
      */
     protected List getPath(Node goal, Node start) {
         List path = new List();
         path.add(goal);
+        goal.setOnThePath(true);
 
-        Node node = goal.getPrevious();
+        Node node = goal;
 
         while (node != start) {
             path.add(node);
+            node.setOnThePath(true);
             node = node.getPrevious();
         }
 
         path.add(start);
+        start.setOnThePath(true);
 
         return path;
+    }
+
+    protected abstract List search(Node start, Node goal);
+
+    // need this, because currently I can't get the path length for JPS any other way
+    public int pathLength(Node start, Node goal) {
+        Node node = goal;
+        int count = 1;
+
+        while (node != start) {
+
+            if (node.getY() != node.getPrevious().getY() && node.getX() != node.getPrevious().getX()) {
+                count += Math.abs(node.getY() - node.getPrevious().getY());
+            } else if (node.getX() != node.getPrevious().getX()) {
+                count += Math.abs(node.getX() - node.getPrevious().getX());
+            } else {
+                count += Math.abs(node.getY() - node.getPrevious().getY());
+            }
+
+            node.setOnThePath(true);
+
+            node = node.getPrevious();
+        }
+        // +1 because of start node
+        return count + 1;
     }
 }
