@@ -12,8 +12,8 @@ public class BFS extends Pathfinder {
     /**
      * Implementation of the breadth-first search algorithm.
      */
-    public BFS() {
-        super();
+    public BFS(int mapSize) {
+        super(mapSize);
     }
 
     /**
@@ -34,8 +34,8 @@ public class BFS extends Pathfinder {
         while (!queue.isEmpty()) {
             Node node = queue.dequeue();
 
-            if (!node.isVisited()) {
-                node.setVisited(true);
+            if (!visited[node.getY()][node.getX()]) {
+                visited[node.getY()][node.getX()] = true;
 
                 if (node.getY() == goal.getY() && node.getX() == goal.getX()) {
                     return getPath(node, start);
@@ -44,13 +44,11 @@ public class BFS extends Pathfinder {
                 for (int i = 0; i < node.getNeighbors().size(); i++) {
                     Node neighbor = node.getNeighbors().get(i);
 
-                    if (neighbor != null && !neighbor.isVisited()) {
-                        if (neighbor.getPrevious() == null) {
-                            neighbor.setPrevious(node);
-                        }
-
-                        queue.enqueue(neighbor);
+                    if (neighbor.getPrevious() == null) {
+                        neighbor.setPrevious(node);
                     }
+
+                    queue.enqueue(neighbor);
                 }
             }
         }

@@ -40,7 +40,7 @@ public class Node implements Comparable<Node> {
         this.x = x;
         this.y = y;
         previous = null;
-        pathLength = Integer.MAX_VALUE;
+        pathLength = 999999.999;
     }
 
     public List getNeighbors() {
@@ -74,7 +74,6 @@ public class Node implements Comparable<Node> {
      */
     public void heuristic(Node goal) {
         distanceFromGoal = MathUtils.shortestDistance(this, goal);
-
     }
 
     public double getDistanceFromGoal() {
@@ -112,9 +111,10 @@ public class Node implements Comparable<Node> {
      * a search back to their defaults.
      */
     public void reset() {
-        pathLength = Integer.MAX_VALUE;
+        pathLength = 999999.999;
         previous = null;
         visited = false;
+        onThePath = false;
     }
 
     public boolean isOnThePath() {

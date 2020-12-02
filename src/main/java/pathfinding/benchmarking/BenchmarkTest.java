@@ -26,13 +26,12 @@ public class BenchmarkTest {
             nodeMap.resetNodes();
         }
 
-        //Arrays.sort(times);
-
         double s = 0;
         for (long time : times) {
-            System.out.println(time);
             s += time;
         }
-        System.out.println((s / times.length) / 1_000_000 + " milliseconds on average");
+
+        System.out.println("median: " + (times[times.length / 2]) + " ns");
+        System.out.println("");
     }
 }

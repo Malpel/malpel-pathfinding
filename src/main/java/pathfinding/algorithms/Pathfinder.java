@@ -9,11 +9,15 @@ import pathfinding.domain.Node;
  */
 public abstract class Pathfinder {
 
+    protected boolean[][] visited;
+    protected double[][] distance;
+
     /**
      *  A superclass for the pathfinding algorithms. Pathfinder takes care of checking
      *  the starting and goal's validity (not null) as well as constructing the path.
      */
-    public Pathfinder() {
+    public Pathfinder(int mapSize) {
+        visited = new boolean[mapSize][mapSize];
     }
 
     /**

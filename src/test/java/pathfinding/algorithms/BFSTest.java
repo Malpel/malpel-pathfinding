@@ -34,7 +34,7 @@ public class BFSTest {
 
     @Before
     public void init() {
-         bfs = new BFS();
+         bfs = new BFS(nodeMap.getHeight());
         nodeMap.resetNodes();
     }
 

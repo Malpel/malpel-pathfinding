@@ -217,9 +217,9 @@ public class MinHeap {
                 return 1;
             }
 
-            if (node.getDistanceFromGoal() + node.getPathLength() > t1.getDistanceFromGoal() + t1.getPathLength()) {
+            if ((node.getDistanceFromGoal() + node.getPathLength()) > (t1.getDistanceFromGoal() + t1.getPathLength())) {
                 return 1;
-            } else if (node.getDistanceFromGoal() + node.getPathLength() == t1.getDistanceFromGoal() + t1.getPathLength()) {
+            } else if ((node.getDistanceFromGoal() + node.getPathLength()) == (t1.getDistanceFromGoal() + t1.getPathLength())) {
                 return 0;
             }
             return -1;
