@@ -34,14 +34,7 @@ public class DijkstraTest {
     @Before
     public void init() {
         dijkstra = new Dijkstra();
-
-        for (int i = 0; i < nodeMap.getWidth(); i++) {
-            for (int j = 0; j < nodeMap.getWidth(); j++) {
-                if (nodeMap.isAccessible(i, j)) {
-                    nodeMap.getNode(i, j).reset();
-                }
-            }
-        }
+        nodeMap.resetNodes();
     }
 
     @Test
@@ -51,7 +44,7 @@ public class DijkstraTest {
 
         List dijkstraPath = dijkstra.search(start, goal);
 
-        assertEquals(10, dijkstraPath.size());
+        assertEquals(9, dijkstraPath.size());
     }
 
     @Test
@@ -61,7 +54,7 @@ public class DijkstraTest {
 
         List dijkstraPath = dijkstra.search(start, goal);
 
-        assertEquals(44, dijkstraPath.size());
+        assertEquals(43, dijkstraPath.size());
     }
 
     @Test
@@ -71,7 +64,7 @@ public class DijkstraTest {
 
         List dijkstraPath = dijkstra.search(start, goal);
 
-        assertEquals(326, dijkstraPath.size());
+        assertEquals(325, dijkstraPath.size());
     }
 
     @Test

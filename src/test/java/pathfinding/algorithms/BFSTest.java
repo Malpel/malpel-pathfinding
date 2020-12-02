@@ -35,14 +35,7 @@ public class BFSTest {
     @Before
     public void init() {
          bfs = new BFS();
-
-        for (int i = 0; i < nodeMap.getWidth(); i++) {
-            for (int j = 0; j < nodeMap.getWidth(); j++) {
-                if (nodeMap.isAccessible(i, j)) {
-                    nodeMap.getNode(i, j).reset();
-                }
-            }
-        }
+        nodeMap.resetNodes();
     }
 
     @Test
@@ -52,7 +45,7 @@ public class BFSTest {
 
         List bfsPath = bfs.search(start, goal);
 
-        assertEquals(10, bfsPath.size());
+        assertEquals(9, bfsPath.size());
     }
 
     @Test
@@ -62,7 +55,7 @@ public class BFSTest {
 
         List bfsPath = bfs.search(start, goal);
 
-        assertEquals(44, bfsPath.size());
+        assertEquals(43, bfsPath.size());
     }
 
     @Test
@@ -72,7 +65,7 @@ public class BFSTest {
 
         List bfsPath = bfs.search(start, goal);
 
-        assertEquals(326, bfsPath.size());
+        assertEquals(325, bfsPath.size());
     }
 
     @Test

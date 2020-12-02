@@ -34,7 +34,6 @@ public abstract class Pathfinder {
      */
     protected List getPath(Node goal, Node start) {
         List path = new List();
-        path.add(goal);
         goal.setOnThePath(true);
 
         Node node = goal;
@@ -51,9 +50,9 @@ public abstract class Pathfinder {
         return path;
     }
 
-    protected abstract List search(Node start, Node goal);
+    public abstract List search(Node start, Node goal);
 
-    // need this, because currently I can't get the path length for JPS any other way
+    // need this, because currently I can't get the path length as nodes for JPS any other way
     public int pathLength(Node start, Node goal) {
         Node node = goal;
         int count = 1;
@@ -72,7 +71,7 @@ public abstract class Pathfinder {
 
             node = node.getPrevious();
         }
-        // +1 because of start node
-        return count + 1;
+
+        return count;
     }
 }

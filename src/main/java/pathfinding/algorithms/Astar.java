@@ -3,6 +3,7 @@ package pathfinding.algorithms;
 import pathfinding.domain.MinHeap;
 import pathfinding.domain.Node;
 import pathfinding.domain.List;
+import pathfinding.util.MathUtils;
 
 /**
  * Implementation of the A* search algorithm.
@@ -46,9 +47,9 @@ public class Astar extends Pathfinder {
                     Node neighbor = node.getNeighbors().get(i);
 
                     if (neighbor != null && !neighbor.isVisited()) {
-                        handlePathLength(node, neighbor);
+                        //handlePathLength(node, neighbor);
                         neighbor.heuristic(goal);
-                        queue.add(neighbor);
+                        handlePathLength(node, neighbor, queue);
                     }
                 }
             }
@@ -57,20 +58,13 @@ public class Astar extends Pathfinder {
         return null;
     }
 
-    private void handlePathLength(Node node, Node neighbor) {
-        double alt = shortestDistance(node, neighbor) + node.getPathLength();
+    private void handlePathLength(Node node, Node neighbor, MinHeap queue) {
+        double alt = MathUtils.shortestDistance(node, neighbor) + node.getPathLength();
 
         if (alt < neighbor.getPathLength()) {
             neighbor.setPathLength(alt);
             neighbor.setPrevious(node);
+            queue.add(neighbor);
         }
-    }
-
-    public double shortestDistance(Node first, Node second) {
-        double distanceFromY = first.getY() - second.getY();
-        double distanceFromX = first.getX() - second.getX();
-
-        return Math.sqrt((distanceFromY * distanceFromY) + (distanceFromX * distanceFromX));
-
     }
 }

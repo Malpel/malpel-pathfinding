@@ -4,6 +4,7 @@ import pathfinding.domain.MinHeap;
 import pathfinding.domain.Node;
 import pathfinding.domain.NodeMap;
 import pathfinding.domain.List;
+import pathfinding.util.MathUtils;
 
 
 /**
@@ -79,14 +80,13 @@ public class JPS extends Pathfinder {
             if (jumpPoint != null) {
                 jumpPoint.heuristic(goal);
 
-                double alt = shortestDistance(node, jumpPoint) + node.getPathLength();
+                double alt = MathUtils.shortestDistance(node, jumpPoint) + node.getPathLength();
 
                 if (alt < jumpPoint.getPathLength()) {
                     jumpPoint.setPathLength(alt);
                     jumpPoint.setPrevious(node);
+                    successors.add(jumpPoint);
                 }
-
-                successors.add(jumpPoint);
             }
         }
 
@@ -124,8 +124,8 @@ public class JPS extends Pathfinder {
         int x = current.getX();
 
         // direction for y- and x-axes.
-        int dy = clamp(y - previous.getY(), -1, 1);
-        int dx = clamp(x - previous.getX(), -1, 1);
+        int dy = MathUtils.clamp(y - previous.getY(), -1, 1);
+        int dx = MathUtils.clamp(x - previous.getX(), -1, 1);
 
         // diagonal
         if (dy != 0 && dx != 0) {
@@ -175,8 +175,8 @@ public class JPS extends Pathfinder {
             return node.getNeighbors();
         }
 
-        int dy = clamp(node.getY() - node.getPrevious().getY(), -1, 1);
-        int dx = clamp(node.getX() - node.getPrevious().getX(), -1, 1);
+        int dy = MathUtils.clamp(node.getY() - node.getPrevious().getY(), -1, 1);
+        int dx = MathUtils.clamp(node.getX() - node.getPrevious().getX(), -1, 1);
 
         if (dy != 0 && dx != 0) {
             getNeighborsForDiagonal(node.getY(), node.getX(), dy, dx, prunedNeighbors);
@@ -268,25 +268,6 @@ public class JPS extends Pathfinder {
                 list.add(map.getNode(y + dy, x - 1));
             }
         }
-    }
-
-    // move this
-    private int clamp(int a, int min, int max) {
-        if (a < min) {
-            return min;
-        } else if (a > max) {
-            return max;
-        }
-
-        return a;
-    }
-
-    public double shortestDistance(Node first, Node second) {
-        double distanceFromY = first.getY() - second.getY();
-        double distanceFromX = first.getX() - second.getX();
-
-        return Math.sqrt((distanceFromY * distanceFromY) + (distanceFromX * distanceFromX));
-
     }
 
 }

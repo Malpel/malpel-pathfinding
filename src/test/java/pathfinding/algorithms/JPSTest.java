@@ -34,14 +34,7 @@ public class JPSTest {
     @Before
     public void init() {
         jps = new JPS(nodeMap);
-
-        for (int i = 0; i < nodeMap.getWidth(); i++) {
-            for (int j = 0; j < nodeMap.getWidth(); j++) {
-                if (nodeMap.isAccessible(i, j)) {
-                    nodeMap.getNode(i, j).reset();
-                }
-            }
-        }
+        nodeMap.resetNodes();
     }
 
     @Test
@@ -51,7 +44,7 @@ public class JPSTest {
 
         jps.search(start, goal);
 
-        assertEquals(10, jps.pathLength(start, goal));
+        assertEquals(9, jps.pathLength(start, goal));
     }
 
     @Test
@@ -61,7 +54,7 @@ public class JPSTest {
 
         jps.search(start, goal);
 
-        assertEquals(44, jps.pathLength(start, goal));
+        assertEquals(43, jps.pathLength(start, goal));
     }
 
     @Test
@@ -71,7 +64,7 @@ public class JPSTest {
 
         jps.search(start, goal);
 
-        assertEquals(326, jps.pathLength(start, goal));
+        assertEquals(325, jps.pathLength(start, goal));
     }
 
     @Test

@@ -1,6 +1,8 @@
 package pathfinding.domain;
 
 
+import pathfinding.util.MathUtils;
+
 /**
  * Node is a representation of a point or a coordinate on the text map. Only legitimate
  * points get turned into nodes - blocks or hindrances will be null.
@@ -71,10 +73,7 @@ public class Node implements Comparable<Node> {
      * The goal node of the path.
      */
     public void heuristic(Node goal) {
-        double distanceFromY = goal.getY() - this.y;
-        double distanceFromX = goal.getX() - this.x;
-
-        distanceFromGoal = Math.sqrt((distanceFromY * distanceFromY) + (distanceFromX * distanceFromX));
+        distanceFromGoal = MathUtils.shortestDistance(this, goal);
 
     }
 

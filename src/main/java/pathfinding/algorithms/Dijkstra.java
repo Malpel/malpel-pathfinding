@@ -3,6 +3,7 @@ package pathfinding.algorithms;
 import pathfinding.domain.MinHeap;
 import pathfinding.domain.Node;
 import pathfinding.domain.List;
+import pathfinding.util.MathUtils;
 
 import java.util.Comparator;
 
@@ -12,14 +13,11 @@ import java.util.Comparator;
 
 public class Dijkstra extends Pathfinder {
 
-    private final MinHeap queue;
-
     /**
      * Implementation of Dijkstra's shortest path algorithm using a priority queue.
      */
     public Dijkstra() {
         super();
-        queue = new MinHeap(new DijkstraComparator());
     }
 
     /**
@@ -34,6 +32,7 @@ public class Dijkstra extends Pathfinder {
      */
     @Override
     public List search(Node start, Node goal) {
+        MinHeap queue = new MinHeap(new DijkstraComparator());
         start.setPathLength(0);
         queue.add(start);
 
@@ -51,8 +50,7 @@ public class Dijkstra extends Pathfinder {
                     Node neighbor = node.getNeighbors().get(i);
 
                     if (neighbor != null && !neighbor.isVisited()) {
-                        handlePathLength(node, neighbor);
-                        queue.add(neighbor);
+                        handlePathLength(node, neighbor, queue);
                     }
                 }
             }
@@ -61,20 +59,14 @@ public class Dijkstra extends Pathfinder {
         return null;
     }
 
-    private void handlePathLength(Node node, Node neighbor) {
-        double alt = shortestDistance(node, neighbor) + node.getPathLength();
+    private void handlePathLength(Node node, Node neighbor, MinHeap queue) {
+        double alt = MathUtils.shortestDistance(node, neighbor) + node.getPathLength();
 
         if (alt < neighbor.getPathLength()) {
             neighbor.setPathLength(alt);
             neighbor.setPrevious(node);
+            queue.add(neighbor);
         }
-    }
-    public double shortestDistance(Node first, Node second) {
-        double distanceFromY = first.getY() - second.getY();
-        double distanceFromX = first.getX() - second.getX();
-
-        return Math.sqrt((distanceFromY * distanceFromY) + (distanceFromX * distanceFromX));
-
     }
 
     /**

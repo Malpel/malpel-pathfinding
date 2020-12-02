@@ -65,23 +65,4 @@ public class List {
     public int size() {
         return endPointer;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        List list = (List) o;
-        return Arrays.equals(arr, list.arr);
-    }
-
-    @Override
-    public int hashCode() {
-        return Arrays.hashCode(arr);
-    }
 }
