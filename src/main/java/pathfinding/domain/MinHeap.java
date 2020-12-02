@@ -100,7 +100,7 @@ public class MinHeap {
         int parent = endPointer / 2;
         int child = endPointer;
 
-        while (comparator.compare(arr[child], arr[parent]) <= 0) {
+        while (comparator.compare(arr[child], arr[parent]) < 0) {
             swap(child, parent);
             child = parent;
             parent = parent / 2;
@@ -125,8 +125,8 @@ public class MinHeap {
                 break;
             }
 
-            if (comparator.compare(arr[leftChild], arr[parent]) <= 0 && comparator.compare(arr[rightChild], arr[parent]) <= 0) {
-                if (comparator.compare(arr[rightChild], arr[leftChild]) <= 0) {
+            if (comparator.compare(arr[leftChild], arr[parent]) < 0 && comparator.compare(arr[rightChild], arr[parent]) < 0) {
+                if (comparator.compare(arr[rightChild], arr[leftChild]) < 0) {
                     swap(parent, rightChild);
                     parent = rightChild;
                 } else {
@@ -134,10 +134,10 @@ public class MinHeap {
                     parent = leftChild;
                 }
 
-            } else if (comparator.compare(arr[leftChild], arr[parent]) <= 0) {
+            } else if (comparator.compare(arr[leftChild], arr[parent]) < 0) {
                 swap(parent, leftChild);
                 parent = leftChild;
-            } else if (comparator.compare(arr[rightChild], arr[parent]) <= 0) {
+            } else if (comparator.compare(arr[rightChild], arr[parent]) < 0) {
                 swap(parent, rightChild);
                 parent = rightChild;
             }
@@ -158,11 +158,11 @@ public class MinHeap {
     private boolean breakCondition(int parent, int leftChild, int rightChild) {
         if (arr[leftChild] == null && arr[rightChild] == null)  {
             return true;
-        } else if (comparator.compare(arr[leftChild], arr[parent]) > 0 && arr[rightChild] == null) {
+        } else if (comparator.compare(arr[leftChild], arr[parent]) >= 0 && arr[rightChild] == null) {
             return true;
         }
 
-        return comparator.compare(arr[leftChild], arr[parent]) > 0 && comparator.compare(arr[rightChild], arr[parent]) > 0;
+        return comparator.compare(arr[leftChild], arr[parent]) >= 0 && comparator.compare(arr[rightChild], arr[parent]) >= 0;
     }
 
     /**
