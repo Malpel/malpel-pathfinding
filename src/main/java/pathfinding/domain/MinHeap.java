@@ -27,13 +27,6 @@ public class MinHeap {
         comparator = new AstarComparator();
     }
 
-    public MinHeap(Comparator<Node> comparator) {
-        arr = new Node[10];
-        endPointer = 1;
-        size = 0;
-        this.comparator = comparator;
-    }
-
     /**
      * Implementation of a binary minimum heap.
      * @param arr

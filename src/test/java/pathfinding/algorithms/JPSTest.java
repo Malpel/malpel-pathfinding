@@ -33,7 +33,7 @@ public class JPSTest {
 
     @Before
     public void init() {
-        jps = new JPS(nodeMap, nodeMap.getHeight());
+        jps = new JPS(nodeMap);
         nodeMap.resetNodes();
     }
 

@@ -19,8 +19,8 @@ public class JPS extends Pathfinder {
      * @param nodeMap
      * The map as a NodeMap.
      */
-    public JPS(NodeMap nodeMap, int mapSize) {
-        super(mapSize);
+    public JPS(NodeMap nodeMap) {
+        super();
         this.map = nodeMap;
     }
 
@@ -43,8 +43,8 @@ public class JPS extends Pathfinder {
         while (!queue.isEmpty()) {
             Node node = queue.poll();
 
-            if (!visited[node.getY()][node.getX()]) {
-                visited[node.getY()][node.getX()] = true;
+            if (!node.isVisited()) {
+                node.setVisited(true);
 
                 if (node == goal) {
                     return getPath(node, start);
@@ -108,7 +108,7 @@ public class JPS extends Pathfinder {
     //CHECKSTYLE:OFF
     private Node jump(Node previous, Node current, Node goal) {
 
-        if (current == null || visited[current.getY()][current.getX()]) {
+        if (current == null || current.isVisited()) {
             return null;
         }
 

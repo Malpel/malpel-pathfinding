@@ -14,7 +14,6 @@ public class MapReader {
 
     File file;
     NodeMap nodeMap;
-    String filename;
     int mapSize;
 
     /**

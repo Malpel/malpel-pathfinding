@@ -33,7 +33,7 @@ public class DijkstraTest {
 
     @Before
     public void init() {
-        dijkstra = new Dijkstra(nodeMap.getHeight());
+        dijkstra = new Dijkstra();
         nodeMap.resetNodes();
     }
 

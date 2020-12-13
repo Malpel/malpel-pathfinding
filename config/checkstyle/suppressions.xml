@@ -6,5 +6,6 @@
 
 <suppressions>
     <suppress files="pathfinding.Main" checks="[a-zA-Z0-9]*"/>
+    <suppress files="pathfinding.ui" checks="[a-zA-Z0-9]*"/>
     <suppress files="test" checks="[a-zA-Z0-9]*"/>
 </suppressions>

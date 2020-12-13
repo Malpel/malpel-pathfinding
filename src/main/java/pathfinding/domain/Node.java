@@ -41,6 +41,7 @@ public class Node implements Comparable<Node> {
         this.y = y;
         previous = null;
         pathLength = 999999.999;
+        visited = false;
     }
 
     public List getNeighbors() {
@@ -115,6 +116,7 @@ public class Node implements Comparable<Node> {
         previous = null;
         visited = false;
         onThePath = false;
+        visited = false;
     }
 
     public boolean isOnThePath() {

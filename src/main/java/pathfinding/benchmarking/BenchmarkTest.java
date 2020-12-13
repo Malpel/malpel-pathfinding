@@ -13,13 +13,13 @@ public class BenchmarkTest {
 
     }
 
-    public void benchmark(int runs, Pathfinder pathfinder, Node start, Node goal, NodeMap nodeMap) {
+    public void benchmarkAlgorithm(int runs, Pathfinder pathfinder, NodeMap nodeMap) {
         long[] times = new long[runs];
         long t;
 
         for (int i = 0; i < runs; i++) {
             t = System.nanoTime();
-            pathfinder.search(start, goal);
+            //pathfinder.search(start, goal);
             t = System.nanoTime() - t;
             times[i] = t;
 

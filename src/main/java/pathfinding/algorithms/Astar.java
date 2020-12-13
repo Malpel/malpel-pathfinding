@@ -13,8 +13,8 @@ public class Astar extends Pathfinder {
     /**
      * Implementation of the A* search algorithm.
      */
-    public Astar(int mapSize) {
-        super(mapSize);
+    public Astar() {
+        super();
     }
 
     /**
@@ -36,8 +36,8 @@ public class Astar extends Pathfinder {
         while (!queue.isEmpty()) {
             Node node = queue.poll();
 
-            if (!visited[node.getY()][node.getX()]) {
-                visited[node.getY()][node.getX()] = true;
+            if (!node.isVisited()) {
+                node.setVisited(true);
 
                 if (node.getY() == goal.getY() && node.getX() == goal.getX()) {
                     return getPath(node, start);

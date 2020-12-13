@@ -18,8 +18,8 @@ public class MathUtils {
         double distanceFromY = Math.abs(first.getY() - second.getY());
         double distanceFromX = Math.abs(first.getX() - second.getX());
 
-        //return Math.sqrt((distanceFromY * distanceFromY) + (distanceFromX * distanceFromX));
-        return (distanceFromY + distanceFromX) + (1.41421356237 - 2) * Math.min(distanceFromY, distanceFromX);
+        return Math.sqrt((distanceFromY * distanceFromY) + (distanceFromX * distanceFromX));
+        //return (distanceFromY + distanceFromX) + (1.41421356237 - 2) * Math.min(distanceFromY, distanceFromX);
     }
 
 }

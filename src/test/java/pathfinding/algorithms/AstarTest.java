@@ -33,7 +33,7 @@ public class AstarTest {
 
     @Before
     public void init() {
-        astar = new Astar(nodeMap.getHeight());
+        astar = new Astar();
         nodeMap.resetNodes();
     }
 
