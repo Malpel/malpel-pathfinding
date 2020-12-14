@@ -23,23 +23,23 @@ public class BenchmarkTest {
 
     public BenchmarkTest() {
 
-            try {
-                MapReader mapReader = new MapReader();
-                small = mapReader.createNodeMap("/Paris_0_256.map", 256);
-                medium = mapReader.createNodeMap("/Paris_0_512.map", 512);
-                big = mapReader.createNodeMap("/Paris_0_1024.map", 1024);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            MapReader mapReader = new MapReader();
+            small = mapReader.createNodeMap("/Paris_0_256.map", 256);
+            medium = mapReader.createNodeMap("/Paris_0_512.map", 512);
+            big = mapReader.createNodeMap("/Paris_0_1024.map", 1024);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-            smallStart = small.getNode(243, 242);
-            smallGoal = small.getNode(18, 6);
+        smallStart = small.getNode(243, 242);
+        smallGoal = small.getNode(18, 6);
 
-            mediumStart = medium.getNode(64, 45);
-            mediumGoal = medium.getNode(511, 484);
+        mediumStart = medium.getNode(64, 45);
+        mediumGoal = medium.getNode(511, 484);
 
-            bigStart = big.getNode(33, 6);
-            bigGoal = big.getNode(992, 994);
+        bigStart = big.getNode(33, 6);
+        bigGoal = big.getNode(992, 994);
     }
 
     public void benchmarkAlgorithms(int runs) {
@@ -65,7 +65,7 @@ public class BenchmarkTest {
             pathfinder.search(start, goal);
             t = System.nanoTime() - t;
 
-            if (i > 0){
+            if (i > 0) {
                 times[i - 1] = t;
             }
 
