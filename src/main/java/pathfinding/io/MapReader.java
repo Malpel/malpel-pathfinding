@@ -12,29 +12,24 @@ import java.io.*;
  */
 public class MapReader {
 
-    File file;
-    NodeMap nodeMap;
-    int mapSize;
+    public MapReader() {
+
+    }
 
     /**
+     * Reads the map from a text file and creates a Node array based on it.
      * MapReader reads in a text form map and turns it into a Node[] array.
      * @param filename
      * The name of the file to be read.
      * @param mapSize
      * The size of the map as an integer.
-     */
-    public MapReader(String filename, int mapSize) {
-        nodeMap = new NodeMap(mapSize, mapSize);
-        file = new File(getClass().getResource(filename).getFile());
-        this.mapSize = mapSize;
-    }
-
-    /**
-     * Reads the map from a text file and creates a Node array based on it.
      * @return Returns the map as Node[] array.
      * @throws IOException
+     * If file not found.
      */
-    public NodeMap createNodeMap() throws IOException {
+    public NodeMap createNodeMap(String filename, int mapSize) throws IOException {
+        NodeMap nodeMap = new NodeMap(mapSize, mapSize);
+        File file = new File(getClass().getResource(filename).getFile());
         BufferedReader br = new BufferedReader(new FileReader(file));
         String st;
         int index = 0;
@@ -50,7 +45,7 @@ public class MapReader {
             index++;
         }
 
-        setNeighbors();
+        setNeighbors(nodeMap);
 
         return nodeMap;
     }
@@ -60,7 +55,7 @@ public class MapReader {
      *  of a two dimensional array and adds them as the node's neighbors.
      */
     //CHECKSTYLE:OFF
-    private void setNeighbors() {
+    private void setNeighbors(NodeMap nodeMap) {
         for (int i = 0; i < nodeMap.getHeight(); i++) {
             for (int j = 0; j < nodeMap.getWidth(); j++) {
 

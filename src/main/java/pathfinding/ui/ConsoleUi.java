@@ -4,6 +4,8 @@ import pathfinding.algorithms.Astar;
 import pathfinding.algorithms.Dijkstra;
 import pathfinding.algorithms.JPS;
 import pathfinding.algorithms.Pathfinder;
+import pathfinding.benchmarking.BenchmarkTest;
+import pathfinding.domain.List;
 import pathfinding.domain.Node;
 import pathfinding.domain.NodeMap;
 import pathfinding.io.MapReader;
@@ -19,6 +21,7 @@ public class ConsoleUi {
     private Node start;
     private Node goal;
     private Pathfinder pathfinder;
+    private NodeMap benchmarkMap;
 
     public ConsoleUi(Scanner scanner) {
         this.scanner = scanner;
@@ -38,17 +41,23 @@ public class ConsoleUi {
                     setPathEndPoints();
                     selectAlgorithm();
 
-                    pathfinder.search(start, goal);
-                    printPath(nodeMap);
+                    List path = pathfinder.search(start, goal);
 
-                    System.out.println();
-                    System.out.println("Length of the shortest path: " + pathfinder.pathLength(start, goal));
+                    if (path == null) {
+                        System.out.println();
+                        System.out.println("No possible path between these points.");
+                    } else {
+                        printPath(nodeMap);
+                        System.out.println();
+                        System.out.println("Length of the shortest path: " + pathfinder.pathLength(start, goal));
+                    }
 
                     break;
                 case "2":
                     System.out.println();
-                    System.out.println("work in progress");
 
+                    BenchmarkTest benchmarkTest = new BenchmarkTest();
+                    benchmarkTest.benchmarkAlgorithms(1000);
 
                     break;
                 case "3":
@@ -70,6 +79,7 @@ public class ConsoleUi {
     }
 
     private void selectMap() {
+        // could be moved
         MapReader mapReader;
         String filename;
 
@@ -111,10 +121,10 @@ public class ConsoleUi {
 
         System.out.println();
 
-        mapReader = new MapReader(filename, mapSize);
+        mapReader = new MapReader();
 
         try {
-            nodeMap = mapReader.createNodeMap();
+            nodeMap = mapReader.createNodeMap(filename, mapSize);
 
         } catch (IOException e) {
             System.out.println("Couldn't open file.");

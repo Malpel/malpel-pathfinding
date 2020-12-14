@@ -22,10 +22,10 @@ public class DijkstraTest {
 
     @BeforeClass
     public static void readMap() {
-        MapReader mapReader = new MapReader("/Paris_0_256.map", 256);
+        MapReader mapReader = new MapReader();
 
         try {
-            nodeMap = mapReader.createNodeMap();
+            nodeMap = mapReader.createNodeMap("/Paris_0_256.map", 256);
         } catch (IOException e) {
             e.printStackTrace();
         }

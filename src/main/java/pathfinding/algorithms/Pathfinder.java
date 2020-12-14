@@ -31,7 +31,7 @@ public abstract class Pathfinder {
     }
 
     /**
-     * MIGHT GET REMOVED IN THE NEXT PATCH
+     * Needed as a helper in certain places.
      */
     protected List getPath(Node goal, Node start) {
         List path = new List();
