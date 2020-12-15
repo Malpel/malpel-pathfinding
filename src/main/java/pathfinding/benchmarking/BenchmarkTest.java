@@ -91,6 +91,7 @@ public class BenchmarkTest {
         System.out.println("");
     }
 
+    //CHECKSTYLE:OFF
     public void benchmarkDatastructures() {
         int n = 100000;
         int runs = 1000;
@@ -149,4 +150,5 @@ public class BenchmarkTest {
         Arrays.sort(pqAddTimes);
         System.out.println("Java's PriorityQueue<> poll() median: " + pqPollTimes[pqPollTimes.length / 2]  + "ns");
     }
+    //CHECKSTYLE:ON
 }
