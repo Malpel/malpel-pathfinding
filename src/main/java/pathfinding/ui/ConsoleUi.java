@@ -58,6 +58,7 @@ public class ConsoleUi {
 
                     BenchmarkTest benchmarkTest = new BenchmarkTest();
                     benchmarkTest.benchmarkAlgorithms(1000);
+                    //benchmarkTest.benchmarkDatastructures();
 
                     break;
                 case "3":

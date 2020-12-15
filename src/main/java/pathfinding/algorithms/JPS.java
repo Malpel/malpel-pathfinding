@@ -270,4 +270,8 @@ public class JPS extends Pathfinder {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Jump point search";
+    }
 }

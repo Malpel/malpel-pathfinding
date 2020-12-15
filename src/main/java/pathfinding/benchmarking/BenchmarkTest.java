@@ -3,11 +3,14 @@ import pathfinding.algorithms.Astar;
 import pathfinding.algorithms.Dijkstra;
 import pathfinding.algorithms.JPS;
 import pathfinding.algorithms.Pathfinder;
+import pathfinding.domain.MinHeap;
 import pathfinding.domain.Node;
 import pathfinding.domain.NodeMap;
 import pathfinding.io.MapReader;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.PriorityQueue;
 
 public class BenchmarkTest {
 
@@ -43,10 +46,12 @@ public class BenchmarkTest {
     }
 
     public void benchmarkAlgorithms(int runs) {
+        System.out.println("Map size: 256");
+        //System.out.println("Dijkstra's algorithm:");
         benchmarkAlgorithm(runs, new Dijkstra(), small, smallStart, smallGoal);
         benchmarkAlgorithm(runs, new Astar(), small, smallStart, smallGoal);
         benchmarkAlgorithm(runs, new JPS(small), small, smallStart, smallGoal);
-
+/*
         benchmarkAlgorithm(runs, new Dijkstra(), medium, mediumStart, mediumGoal);
         benchmarkAlgorithm(runs, new Astar(), medium, mediumStart, mediumGoal);
         benchmarkAlgorithm(runs, new JPS(medium), medium, mediumStart, mediumGoal);
@@ -54,6 +59,8 @@ public class BenchmarkTest {
         benchmarkAlgorithm(runs, new Dijkstra(), big, bigStart, bigGoal);
         benchmarkAlgorithm(runs, new Astar(), big, bigStart, bigGoal);
         benchmarkAlgorithm(runs, new JPS(big), big, bigStart, bigGoal);
+
+ */
     }
 
     private void benchmarkAlgorithm(int runs, Pathfinder pathfinder, NodeMap nodeMap, Node start, Node goal) {
@@ -77,8 +84,69 @@ public class BenchmarkTest {
             s += time;
         }
 
-        System.out.println("average: " + (s / times.length) / 1000000 + "ms");
-        System.out.println("median: " + (times[times.length / 2] / 1000000) + "ms");
+        System.out.println(pathfinder.toString());
+        System.out.println("average: " + (s / times.length) / 1000000.0 + "ms");
+        Arrays.sort(times);
+        System.out.println("median: " + (times[times.length / 2] / 1000000.0) + "ms");
         System.out.println("");
+    }
+
+    public void benchmarkDatastructures() {
+        int n = 100000;
+        int runs = 1000;
+
+        long[] mhAddTimes = new long[runs];
+        long[] pqAddTimes = new long[runs];
+
+        long[] mhPollTimes = new long[runs];
+        long[] pqPollTimes = new long[runs];
+
+        for (int i = 0; i < runs; i++) {
+            long tAcc = 0;
+            MinHeap minHeap = new MinHeap();
+            for (int j = 0; j < n; j++) {
+                long t = System.nanoTime();
+                minHeap.add(new Node(i, j));
+                tAcc += System.nanoTime() - t;
+            }
+            mhAddTimes[i] = tAcc / n;
+
+            tAcc = 0;
+            PriorityQueue<Node> priorityQueue = new PriorityQueue<>();
+            for (int j = 0; j < n; j++) {
+                long t = System.nanoTime();
+                priorityQueue.add(new Node(i, j));
+                tAcc += System.nanoTime() - t;
+            }
+            pqAddTimes[i] = tAcc / n;
+
+            tAcc = 0;
+            while (!minHeap.isEmpty()) {
+                long t = System.nanoTime();
+                minHeap.poll();
+                tAcc += System.nanoTime() - t;
+            }
+            mhPollTimes[i] = tAcc / n;
+
+            tAcc = 0;
+            while (!priorityQueue.isEmpty()) {
+                long t = System.nanoTime();
+                priorityQueue.poll();
+                tAcc += System.nanoTime() - t;
+            }
+            pqPollTimes[i] = tAcc / n;
+        }
+
+        Arrays.sort(mhAddTimes);
+        System.out.println("MinHeap add() median: " + mhAddTimes[mhAddTimes.length / 2] + "ns");
+
+        Arrays.sort(pqAddTimes);
+        System.out.println("Java's PriorityQueue<> add() median: " + pqAddTimes[pqAddTimes.length / 2] + "ns");
+
+        Arrays.sort(mhPollTimes);
+        System.out.println("MinHeap poll() median: " + mhPollTimes[mhPollTimes.length / 2]  + "ns");
+
+        Arrays.sort(pqAddTimes);
+        System.out.println("Java's PriorityQueue<> poll() median: " + pqPollTimes[pqPollTimes.length / 2]  + "ns");
     }
 }

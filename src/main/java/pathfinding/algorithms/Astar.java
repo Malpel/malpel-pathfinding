@@ -63,4 +63,9 @@ public class Astar extends Pathfinder {
             queue.add(neighbor);
         }
     }
+
+    @Override
+    public String toString() {
+        return "A*";
+    }
 }

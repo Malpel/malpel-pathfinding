@@ -63,4 +63,9 @@ public class Dijkstra extends Pathfinder {
             queue.add(neighbor);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Dijkstra's algorithm";
+    }
 }
