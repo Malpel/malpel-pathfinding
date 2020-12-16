@@ -5,9 +5,9 @@ package pathfinding.domain;
  */
 public class NodeMap {
 
-    private int width;
-    private int height;
-    private Node[][] arr;
+    private final int width;
+    private final int height;
+    private final Node[][] arr;
 
     /**
      * NodeMap is a representation of the map as nodes.

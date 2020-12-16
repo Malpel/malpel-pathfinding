@@ -21,10 +21,11 @@ public class ConsoleUi {
     private Node start;
     private Node goal;
     private Pathfinder pathfinder;
-    private NodeMap benchmarkMap;
+    private final MapReader mapReader;
 
-    public ConsoleUi(Scanner scanner) {
+    public ConsoleUi(Scanner scanner, MapReader mapReader) {
         this.scanner = scanner;
+        this.mapReader = mapReader;
     }
 
     public void runUi() {
@@ -58,8 +59,7 @@ public class ConsoleUi {
 
                     BenchmarkTest benchmarkTest = new BenchmarkTest();
                     benchmarkTest.benchmarkAlgorithms(1000);
-                    //benchmarkTest.benchmarkDatastructures();
-
+                    benchmarkTest.benchmarkDataStructures();
                     break;
                 case "3":
                     System.out.println();
@@ -80,8 +80,6 @@ public class ConsoleUi {
     }
 
     private void selectMap() {
-        // could be moved
-        MapReader mapReader;
         String filename;
 
         label:
@@ -122,8 +120,6 @@ public class ConsoleUi {
 
         System.out.println();
 
-        mapReader = new MapReader();
-
         try {
             nodeMap = mapReader.createNodeMap(filename, mapSize);
 
@@ -144,6 +140,7 @@ public class ConsoleUi {
             String[] startCoords = startString.split(",");
             String[] goalCoords = goalString.split(",");
 
+            // the format in the code is (y, x), so this needs to be done backwards
             boolean validStart = nodeMap.isAccessible(Integer.parseInt(startCoords[1]), Integer.parseInt(startCoords[0]));
             boolean validGoal = nodeMap.isAccessible(Integer.parseInt(goalCoords[1]), Integer.parseInt(goalCoords[0]));
 

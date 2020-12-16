@@ -1,7 +1,5 @@
 package pathfinding.domain;
 
-import java.util.Arrays;
-
 /**
  * Implementation of the list datastructure.
  */
