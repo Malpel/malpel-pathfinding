@@ -1,8 +1,5 @@
 package pathfinding.benchmarking;
-import pathfinding.algorithms.Astar;
-import pathfinding.algorithms.Dijkstra;
-import pathfinding.algorithms.JPS;
-import pathfinding.algorithms.Pathfinder;
+import pathfinding.algorithms.*;
 import pathfinding.domain.List;
 import pathfinding.domain.MinHeap;
 import pathfinding.domain.Node;
@@ -16,53 +13,48 @@ import java.util.PriorityQueue;
 
 public class BenchmarkTest {
 
-    private NodeMap small;
-    private NodeMap medium;
-    private NodeMap big;
-    private final Node smallStart;
-    private final Node smallGoal;
-    private final Node mediumStart;
-    private final Node mediumGoal;
-    private final Node bigStart;
-    private final Node bigGoal;
+    ArrayList<BenchmarkMap> maps = new ArrayList<>();
+
 
     public BenchmarkTest() {
 
+        // this is stupid
         try {
             MapReader mapReader = new MapReader();
-            small = mapReader.createNodeMap("/Paris_0_256.map", 256);
-            medium = mapReader.createNodeMap("/Paris_0_512.map", 512);
-            big = mapReader.createNodeMap("/Paris_0_1024.map", 1024);
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Berlin_0_256.map", 256), 6, 22, 255, 253, "Berlin_0_256"));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Berlin_0_512.map", 512), 36, 32, 511, 510, "Berlin_0_512"));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Berlin_0_1024.map", 1024), 3, 19, 1002, 1005, "Berlin_0_1024"));
+
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/London_0_256.map", 256), 221, 32, 1, 122, "London_0_256"));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/London_0_512.map", 512), 2, 227, 458, 54, "London_0_512"));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/London_0_1024.map", 1024), 943, 257, 37, 411, "London_0_1024"));
+
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Moscow_1_256.map", 256), 144, 11, 7, 255, "Moscow_1_256"));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Moscow_1_512.map", 512), 273, 15, 494, 501, "Moscow_1_512"));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Moscow_1_1024.map", 1024), 43, 896, 1023, 1, "Moscow_1_1024"));
+
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/NewYork_0_256.map", 256), 252, 252, 31, 7, "NewYork_0_256"));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/NewYork_0_512.map", 512), 443, 509, 9, 0, "NewYork_0_512"));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/NewYork_0_1024.map", 1024), 22, 97, 1022, 996, "NewYork_0_1024"));
+
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Paris_0_256.map", 256), 243, 242, 18, 6, "Paris_0_256"));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Paris_0_512.map", 512), 64, 45, 511, 484, "Paris_0_512"));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Paris_0_1024.map", 1024), 992, 994, 33, 6, "Paris_0_1024"));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        /*
-         * These paths use the longest path from
-         * the MovingAi Paris_0 map scenarios.
-         */
-        smallStart = small.getNode(243, 242);
-        smallGoal = small.getNode(18, 6);
-
-        mediumStart = medium.getNode(64, 45);
-        mediumGoal = medium.getNode(511, 484);
-
-        bigStart = big.getNode(33, 6);
-        bigGoal = big.getNode(992, 994);
     }
 
     public void benchmarkAlgorithms(int runs) {
-        benchmarkAlgorithm(runs, new Dijkstra(), small, smallStart, smallGoal);
-        benchmarkAlgorithm(runs, new Astar(), small, smallStart, smallGoal);
-        benchmarkAlgorithm(runs, new JPS(small), small, smallStart, smallGoal);
 
-        benchmarkAlgorithm(runs, new Dijkstra(), medium, mediumStart, mediumGoal);
-        benchmarkAlgorithm(runs, new Astar(), medium, mediumStart, mediumGoal);
-        benchmarkAlgorithm(runs, new JPS(medium), medium, mediumStart, mediumGoal);
-
-        benchmarkAlgorithm(runs, new Dijkstra(), big, bigStart, bigGoal);
-        benchmarkAlgorithm(runs, new Astar(), big, bigStart, bigGoal);
-        benchmarkAlgorithm(runs, new JPS(big), big, bigStart, bigGoal);
+        for (BenchmarkMap map : maps) {
+            System.out.println("Map: " + map.getName());
+            System.out.println();
+            benchmarkAlgorithm(runs, new Dijkstra(), map.getNodeMap(), map.getStart(), map.getGoal());
+            benchmarkAlgorithm(runs, new Astar(), map.getNodeMap(), map.getStart(), map.getGoal());
+            benchmarkAlgorithm(runs, new JPS(map.getNodeMap()), map.getNodeMap(), map.getStart(), map.getGoal());
+        }
 
     }
 
@@ -103,8 +95,8 @@ public class BenchmarkTest {
             s += time;
         }
 
-        System.out.println("Map size: " + nodeMap.getWidth());
         System.out.println(pathfinder.toString());
+        System.out.println("Map size: " + nodeMap.getWidth());
         System.out.println("average: " + (s / times.length) / 1000000.0 + "ms");
         Arrays.sort(times);
         System.out.println("median: " + (times[times.length / 2] / 1000000.0) + "ms");
@@ -112,7 +104,7 @@ public class BenchmarkTest {
     }
 
     public void benchmarkDataStructures() {
-        int n = 100000;
+        int n = 10000;
         int runs = 1000;
 
         benchmarkMinHeap(runs, n);

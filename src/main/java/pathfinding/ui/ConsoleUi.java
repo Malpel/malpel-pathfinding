@@ -42,7 +42,9 @@ public class ConsoleUi {
                     setPathEndPoints();
                     selectAlgorithm();
 
+                    long t = System.nanoTime();
                     List path = pathfinder.search(start, goal);
+                    t = System.nanoTime() - t;
 
                     if (path == null) {
                         System.out.println();
@@ -51,6 +53,7 @@ public class ConsoleUi {
                         printPath(nodeMap);
                         System.out.println();
                         System.out.println("Length of the shortest path: " + pathfinder.pathLength(start, goal));
+                        System.out.println(t / 1000000.0);
                     }
 
                     break;
@@ -58,8 +61,8 @@ public class ConsoleUi {
                     System.out.println();
 
                     BenchmarkTest benchmarkTest = new BenchmarkTest();
-                    benchmarkTest.benchmarkAlgorithms(1000);
-                    benchmarkTest.benchmarkDataStructures();
+                    benchmarkTest.benchmarkAlgorithms(100);
+                    //benchmarkTest.benchmarkDataStructures();
                     break;
                 case "3":
                     System.out.println();

@@ -2,7 +2,7 @@ package pathfinding.domain;
 
 
 /**
- * Implementation of a binary minimum heap.
+ * Implementation of a minimum heap.
  */
 public class MinHeap {
 
@@ -16,16 +16,16 @@ public class MinHeap {
     private int size;
 
     /**
-     * Implementation of a binary minimum heap.
+     * Implementation of a minimum heap.
      */
     public MinHeap() {
-        arr = new Node[10];
+        arr = new Node[11];
         endPointer = 1;
         size = 0;
     }
 
     /**
-     * Implementation of a binary minimum heap.
+     * Implementation of a minimum heap.
      * @param arr
      * A ready made heap in array form.
      */
@@ -75,7 +75,7 @@ public class MinHeap {
         arr[1] = arr[endPointer];
         arr[endPointer] = null;
 
-        swapOrderPoll();
+        swapOrderPoll(1);
         size--;
         checkSize();
 
@@ -103,55 +103,23 @@ public class MinHeap {
     /**
      * Orders the heap after polling/removal.
      */
-    private void swapOrderPoll() {
-        int parent = 1;
+    private void swapOrderPoll(int i) {
+        int parent = i;
+        int leftChild = parent * 2;
+        int rightChild = (parent * 2) + 1;
 
-        while (true) {
-            int leftChild = parent * 2;
-            int rightChild = (parent * 2) + 1;
-
-            if ((leftChild >= arr.length && rightChild >= arr.length) || breakCondition(parent, leftChild, rightChild)) {
-                break;
-            }
-
-            if (compare(arr[leftChild], arr[parent]) < 0 && compare(arr[rightChild], arr[parent]) < 0) {
-                if (compare(arr[rightChild], arr[leftChild]) < 0) {
-                    swap(parent, rightChild);
-                    parent = rightChild;
-                } else {
-                    swap(parent, leftChild);
-                    parent = leftChild;
-                }
-
-            } else if (compare(arr[leftChild], arr[parent]) < 0) {
-                swap(parent, leftChild);
-                parent = leftChild;
-            } else if (compare(arr[rightChild], arr[parent]) < 0) {
-                swap(parent, rightChild);
-                parent = rightChild;
-            }
-        }
-    }
-
-    /**
-     * Used for breaking the while loop in swapOrderPoll().
-     * @param parent
-     * The current node in processing.
-     * @param leftChild
-     * The left child node of the parent.
-     * @param rightChild
-     * The right child node of the parent.
-     * @return
-     * True, if both children null or if neither child is an improvement, otherwise false.
-     */
-    private boolean breakCondition(int parent, int leftChild, int rightChild) {
-        if (arr[leftChild] == null && arr[rightChild] == null)  {
-            return true;
-        } else if (compare(arr[leftChild], arr[parent]) >= 0 && arr[rightChild] == null) {
-            return true;
+        if (leftChild < endPointer && compare(arr[leftChild], arr[parent]) < 0) {
+            parent = leftChild;
         }
 
-        return compare(arr[leftChild], arr[parent]) >= 0 && compare(arr[rightChild], arr[parent]) >= 0;
+        if (rightChild < endPointer && compare(arr[rightChild], arr[parent]) < 0) {
+            parent = rightChild;
+        }
+
+        if (parent != i) {
+            swap(parent, i);
+            swapOrderPoll(parent);
+        }
     }
 
     /**

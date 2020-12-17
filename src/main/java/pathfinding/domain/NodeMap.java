@@ -8,6 +8,8 @@ public class NodeMap {
     private final int width;
     private final int height;
     private final Node[][] arr;
+    private Node start;
+    private Node goal;
 
     /**
      * NodeMap is a representation of the map as nodes.
@@ -78,6 +80,27 @@ public class NodeMap {
 
     public int getHeight() {
         return height;
+    }
+
+    public Node getStart() {
+        return start;
+    }
+
+    public Node getGoal() {
+        return goal;
+    }
+
+    public void setStart(Node start) {
+        this.start = start;
+    }
+
+    public void setGoal(Node goal) {
+        this.goal = goal;
+    }
+
+    public void setEnds(int a, int b, int c, int d) {
+        start = arr[a][b];
+        goal = arr[c][d];
     }
 
     /**
