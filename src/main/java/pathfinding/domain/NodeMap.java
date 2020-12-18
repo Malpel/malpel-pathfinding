@@ -98,11 +98,6 @@ public class NodeMap {
         this.goal = goal;
     }
 
-    public void setEnds(int a, int b, int c, int d) {
-        start = arr[a][b];
-        goal = arr[c][d];
-    }
-
     /**
      * Resets all nodes.
      */

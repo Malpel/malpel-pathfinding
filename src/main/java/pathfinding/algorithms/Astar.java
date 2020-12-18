@@ -39,7 +39,7 @@ public class Astar extends Pathfinder {
             if (!node.isVisited()) {
                 node.setVisited(true);
 
-                if (node.getY() == goal.getY() && node.getX() == goal.getX()) {
+                if (node == goal) {
                     return getPath(node, start);
                 }
 
@@ -57,7 +57,7 @@ public class Astar extends Pathfinder {
     private void handlePathLength(Node node, Node neighbor, MinHeap queue) {
         double alt = MathUtils.shortestDistance(node, neighbor) + node.getPathLength();
 
-        if (alt < neighbor.getPathLength()) {
+        if (alt <= neighbor.getPathLength()) {
             neighbor.setPathLength(alt);
             neighbor.setPrevious(node);
             queue.add(neighbor);

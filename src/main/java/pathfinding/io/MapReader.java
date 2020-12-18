@@ -82,28 +82,28 @@ public class MapReader {
                 }
 
                 /*
-                *   diagonals are checked this way to prevent corner cutting entirely
+                *   diagonals are checked this way to prevent corner cutting almost entirely
                  */
                 if (nodeMap.isAccessible(i - 1, j - 1)) {
-                    if (nodeMap.isAccessible(i - 1, j) || nodeMap.isAccessible(i, j - 1)) {
+                    if (nodeMap.isAccessible(i - 1, j) && nodeMap.isAccessible(i, j - 1)) {
                         neighbors.add(nodeMap.getNode(i - 1, j - 1));
                     }
                 }
 
                 if (nodeMap.isAccessible(i - 1, j + 1)) {
-                    if (nodeMap.isAccessible(i - 1, j) || nodeMap.isAccessible(i, j + 1)) {
+                    if (nodeMap.isAccessible(i - 1, j) && nodeMap.isAccessible(i, j + 1)) {
                         neighbors.add(nodeMap.getNode(i - 1, j + 1));
                     }
                 }
 
                 if (nodeMap.isAccessible(i + 1, j - 1)) {
-                    if (nodeMap.isAccessible(i + 1, j) || nodeMap.isAccessible(i, j - 1)) {
+                    if (nodeMap.isAccessible(i + 1, j) && nodeMap.isAccessible(i, j - 1)) {
                         neighbors.add(nodeMap.getNode(i + 1, j - 1));
                     }
                 }
 
                 if (nodeMap.isAccessible(i + 1, j + 1)) {
-                    if (nodeMap.isAccessible(i + 1, j) || nodeMap.isAccessible(i, j + 1)) {
+                    if (nodeMap.isAccessible(i + 1, j) && nodeMap.isAccessible(i, j + 1)) {
                         neighbors.add(nodeMap.getNode(i + 1, j + 1));
                     }
                 }

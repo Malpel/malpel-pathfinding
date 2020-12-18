@@ -116,7 +116,7 @@ public class JPS extends Pathfinder {
             return null;
         }
 
-        if (current.getY() == goal.getY() && current.getX() == goal.getX()) {
+        if (current == goal) {
             return current;
         }
 
@@ -140,20 +140,25 @@ public class JPS extends Pathfinder {
 
             // vertical
             if (dx == 0) {
-                if ((map.isAccessible(y + dy, x + 1) && !map.isAccessible(y, x + 1))
-                || (map.isAccessible(y + dy, x - 1) && !map.isAccessible(y, x - 1))) {
+                if ((!map.isAccessible(y - dy, x + 1) && map.isAccessible(y, x + 1))
+                || (!map.isAccessible(y - dy, x - 1) && map.isAccessible(y, x - 1))) {
 
                     return current;
                 }
                 // horizontal
             } else {
-                if ((map.isAccessible(y + 1, x + dx) && !map.isAccessible(y + 1, x))
-                || (map.isAccessible(y - 1, x + dx) && !map.isAccessible(y - 1, x))) {
+                if ((!map.isAccessible(y + 1, x - dx) && map.isAccessible(y + 1, x))
+                || (!map.isAccessible(y - 1, x - dx) && map.isAccessible(y - 1, x))) {
 
                     return current;
                 }
             }
         }
+
+        if (!map.isAccessible(y + dy, x) || !map.isAccessible(y, x + dx)) {
+            return null;
+        }
+
 
         return jump(current, map.getNode(y + dy, x + dx), goal);
     }
@@ -210,18 +215,10 @@ public class JPS extends Pathfinder {
             list.add(map.getNode(y, x + dx));
         }
 
-        if (map.isAccessible(y + dy, x + dx) && (map.isAccessible(y + dy, x) || map.isAccessible(y, x + dx))) {
+        if ( (map.isAccessible(y + dy, x) && map.isAccessible(y, x + dx))) {
             list.add(map.getNode(y + dy, x + dx));
         }
 
-        // forced neighbors
-        if (!map.isAccessible(y, x - dx) && map.isAccessible(y + dy, x) && map.isAccessible(y + dy, x - dx)) {
-            list.add(map.getNode(y + dy, x - dx));
-        }
-
-        if (!map.isAccessible(y - dy, x) && map.isAccessible(y, x + dx) && map.isAccessible(y - dy, x + dx)) {
-            list.add(map.getNode(y - dy, x + dx));
-        }
     }
 
     /**
@@ -239,32 +236,46 @@ public class JPS extends Pathfinder {
      */
     private void getNeighborsForCardinal(int y, int x, int dy, int dx, List list) {
         if (dy == 0) {
-            // natural
+
             if (map.isAccessible(y, x + dx)) {
                 list.add(map.getNode(y,  x + dx));
             }
 
-            // forced
-            if (!map.isAccessible(y + 1, x) && map.isAccessible(y, x + dx) && map.isAccessible(y + 1, x + dx)) {
+            if (map.isAccessible(y + 1, x)) {
+                list.add(map.getNode(y + 1, x));
+            }
+
+            if (map.isAccessible(y - 1, x)) {
+                list.add(map.getNode(y - 1, x));
+            }
+
+            if (map.isAccessible(y, x + dx) && map.isAccessible(y + 1, x)) {
                 list.add(map.getNode(y + 1, x + dx));
             }
 
-            if (!map.isAccessible(y - 1, x) && map.isAccessible(y, x + dx) && map.isAccessible(y - 1, x + dx)) {
+            if (map.isAccessible(y, x + dx) && map.isAccessible(y - 1, x)) {
                 list.add(map.getNode(y - 1, x + dx));
             }
+
         } else {
 
-            // natural
             if (map.isAccessible(y + dy, x)) {
                 list.add(map.getNode(y + dy, x));
             }
 
-            // forced
-            if (!map.isAccessible(y, x + 1) && map.isAccessible(y + dy, x) && map.isAccessible(y + dy, x + 1)) {
+            if (map.isAccessible(y, x + 1)) {
+                list.add(map.getNode(y, x + 1));
+            }
+
+            if (map.isAccessible(y, x - 1)) {
+                list.add(map.getNode(y, x - 1));
+            }
+
+            if (map.isAccessible(y, x + 1) && map.isAccessible(y + dy, x)) {
                 list.add(map.getNode(y + dy, x + 1));
             }
 
-            if (!map.isAccessible(y, x - 1) && map.isAccessible(y + dy, x) && map.isAccessible(y + dy, x - 1)) {
+            if (map.isAccessible(y, x - 1) && map.isAccessible(y + dy, x)) {
                 list.add(map.getNode(y + dy, x - 1));
             }
         }

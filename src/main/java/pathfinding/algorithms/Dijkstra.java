@@ -40,7 +40,7 @@ public class Dijkstra extends Pathfinder {
             if (!node.isVisited()) {
                 node.setVisited(true);
 
-                if (node.getY() == goal.getY() && node.getX() == goal.getX()) {
+                if (node == goal) {
                     return getPath(node, start);
                 }
 

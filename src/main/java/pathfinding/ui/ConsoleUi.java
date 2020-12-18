@@ -52,8 +52,7 @@ public class ConsoleUi {
                     } else {
                         printPath(nodeMap);
                         System.out.println();
-                        System.out.println("Length of the shortest path: " + pathfinder.pathLength(start, goal));
-                        System.out.println(t / 1000000.0);
+                        System.out.println("Length of the shortest path: " + goal.getPathLength());
                     }
 
                     break;
@@ -61,8 +60,13 @@ public class ConsoleUi {
                     System.out.println();
 
                     BenchmarkTest benchmarkTest = new BenchmarkTest();
-                    benchmarkTest.benchmarkAlgorithms(100);
-                    //benchmarkTest.benchmarkDataStructures();
+                    System.out.println("Algorithms: ");
+                    benchmarkTest.benchmarkAlgorithms(10);
+                    System.out.println("--------------------------------------------------");
+                    System.out.println("Data structures: ");
+                    System.out.println();
+                    benchmarkTest.benchmarkDataStructures();
+                    System.out.println("--------------------------------------------------");
                     break;
                 case "3":
                     System.out.println();

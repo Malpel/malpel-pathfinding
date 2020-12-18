@@ -55,7 +55,7 @@ public class BFSTest {
 
         List bfsPath = bfs.search(start, goal);
 
-        assertEquals(43, bfsPath.size());
+        assertEquals(44, bfsPath.size());
     }
 
     @Test
@@ -65,7 +65,7 @@ public class BFSTest {
 
         List bfsPath = bfs.search(start, goal);
 
-        assertEquals(325, bfsPath.size());
+        assertEquals(330, bfsPath.size());
     }
 
     @Test

@@ -39,32 +39,32 @@ public class JPSTest {
 
     @Test
     public void findsShortPath() {
-        start = nodeMap.getNode(0, 0);
-        goal = nodeMap.getNode(7, 8);
+        start = nodeMap.getNode(35, 35);
+        goal = nodeMap.getNode(43, 39);
 
         jps.search(start, goal);
 
-        assertEquals(9, jps.pathLength(start, goal));
+        assertEquals(10.82842712, goal.getPathLength(), 0.001);
     }
 
     @Test
     public void longerPathIsCorrectLength() {
-        start = nodeMap.getNode(78, 59);
-        goal = nodeMap.getNode(84, 90);
+        start = nodeMap.getNode(101, 106);
+        goal = nodeMap.getNode(85, 155);
 
         jps.search(start, goal);
 
-        assertEquals(43, jps.pathLength(start, goal));
+        assertEquals(55.62741699, goal.getPathLength(), 0.001);
     }
 
     @Test
     public void evenLongerPathIsCorrectLength() {
-        start = nodeMap.getNode(243, 242);
-        goal = nodeMap.getNode(18, 6);
+        start = nodeMap.getNode(7, 27);
+        goal = nodeMap.getNode(249, 249);
 
         jps.search(start, goal);
 
-        assertEquals(325, jps.pathLength(start, goal));
+        assertEquals(387.44574280, goal.getPathLength(), 0.001);
     }
 
     @Test
@@ -75,5 +75,6 @@ public class JPSTest {
         List jpsPath = jps.search(start, goal);
 
         assertNull(jpsPath);
+        assertEquals(999999.999, goal.getPathLength(), 0.0);
     }
 }

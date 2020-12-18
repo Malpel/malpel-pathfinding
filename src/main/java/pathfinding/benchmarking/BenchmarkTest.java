@@ -96,7 +96,7 @@ public class BenchmarkTest {
         }
 
         System.out.println(pathfinder.toString());
-        System.out.println("Map size: " + nodeMap.getWidth());
+        System.out.println("Map size: " + nodeMap.getWidth() + "x" + nodeMap.getHeight());
         System.out.println("average: " + (s / times.length) / 1000000.0 + "ms");
         Arrays.sort(times);
         System.out.println("median: " + (times[times.length / 2] / 1000000.0) + "ms");
@@ -186,6 +186,7 @@ public class BenchmarkTest {
         Arrays.sort(pqAddTimes);
         System.out.println("java.util.PriorityQueue add() median: " + pqAddTimes[pqAddTimes.length / 2] + "ns");
 
+        System.out.println();
         Arrays.sort(mhPollTimes);
         System.out.println("pathfinding.domain.MinHeap poll() median: " + mhPollTimes[mhPollTimes.length / 2]  + "ns");
 
@@ -201,6 +202,8 @@ public class BenchmarkTest {
     private void benchmarkList(int runs, int n) {
         long[] myListAddTimes = new long[runs];
         long[] javaListAddTimes = new long[runs];
+        long[] myListGetTimes = new long[runs];
+        long[] javaListGetTimes = new long[runs];
 
         for (int i = 0; i < runs; i++) {
             long tAcc = 0;
@@ -220,6 +223,22 @@ public class BenchmarkTest {
                 tAcc += System.nanoTime() - t;
             }
             javaListAddTimes[i] = tAcc / n;
+
+            tAcc = 0;
+            for (int j = 0; j < n; j++) {
+                long t = System.nanoTime();
+                myList.get(j);
+                tAcc += System.nanoTime() - t;
+            }
+            myListGetTimes[i] = tAcc / n;
+
+            tAcc = 0;
+            for (int j = 0; j < n; j++) {
+                long t = System.nanoTime();
+                javaList.get(j);
+                tAcc += System.nanoTime() - t;
+            }
+            javaListGetTimes[i] = tAcc / n;
         }
 
         System.out.println();
@@ -228,6 +247,13 @@ public class BenchmarkTest {
 
         Arrays.sort(javaListAddTimes);
         System.out.println("java.util.ArrayList add() median: " + javaListAddTimes[javaListAddTimes.length / 2] + "ns");
+
+        System.out.println();
+        Arrays.sort(myListGetTimes);
+        System.out.println("pathfinding.domain.List get(int) median: " + myListGetTimes[myListAddTimes.length / 2] + "ns");
+
+        Arrays.sort(javaListGetTimes);
+        System.out.println("java.util.ArrayList get(int) median: " + javaListGetTimes[javaListAddTimes.length / 2] + "ns");
     }
     //CHECKSTYLE:ON
 }
