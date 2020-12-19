@@ -6,7 +6,6 @@
 
 The project has changed from the initial specification; the most notable change is the inclusion of the Jump Point Search algorithm. Because of its inclusion, the breadth-first search algorithm is not actually a part of the project proper, although it is present in the code. As a word of warning, this project uses the coordinate points backwards (y, x) instead of the typical (x, y). This is because I've found it a helpful way to think about coordinates in programming.
 
-
 ## `pathfinding.algorithms`
 The pathfinding algorithms are extentions of the abstract _Pathfinder_-class, which takes care of counting the nodes on the path, mainly useful in testing. The algorithms are based on a generic search alogirthm template, in pseudocode below.
 
@@ -26,7 +25,7 @@ search(start_node):
     end while
     return None                       # no goal found
 ``` 
-For Dijkstra's algorithm, A*, and Jump Point Search the `node_list` is a priority queue, implemented in this project as a binary minimum heap. The program also uses an adjacency list for `node.neighbors()`. We can see that the time and space complexities for the pathfinding algorithms are as follows:
+For Dijkstra's algorithm, A*, and Jump Point Search the `node_list` is a priority queue, implemented in this project as a minimum heap. The program also uses an adjacency list for `node.neighbors()`. We can see that the time and space complexities for the pathfinding algorithms are as follows:
 
  | Algorithm | Time | Space |
  |:----------|:-----:|:-----:|
@@ -37,13 +36,13 @@ For Dijkstra's algorithm, A*, and Jump Point Search the `node_list` is a priorit
  Where E = number of edges, V = number of vertices.
 
  ### Jump Point Search
- While Dijkstra's algorithm and A* both were familiar before this project, Jump Point Search was a completely new algorithm. It does still follow the pseudocode above where applicable, since it is based on A*. This projects version is based on examples found in the original paper describing the algorithm, as well as other examples found online (for example). The path given by the program consists of the jump points only.   
+ While Dijkstra's algorithm and A* both were familiar before this project, Jump Point Search was a completely new algorithm. It does still follow the pseudocode above where applicable, since it is based on A*. This projects version is based on examples found in the original paper describing the algorithm, as well as other examples found online (for example). The path given by the program consists of the jump points only. Because of its unfamiliarity and scarce examples online, it may not behave as intented. For a supposed upgrade over A*, its performance is abysmal in some of the test maps, even getting badly beaten by Dijkstra's. This could be because the maps just happen to be tricky to compute for this algorithm, but it may be just a poor or even outright failed implementation of the algorithm.   
 
  ## `pathfinding.domain`
  The implemented data structures `MinHeap`, `List`, and `Deque` don't offer the full functionality of their Java counterparts. Only the functions required by the search algorithms are implemented.
 
  ### `MinHeap`
- The `MinHeap` replaces the `java.util.PriorityQueue`. As its name implies, it is an implementation of a minimum heap. Because it is a balanced binary tree, its height is _O(log N)_, where _N_ is the number of vertices, or `Nodes`, in the tree. As such, the operations `add(Node)` and `poll()` take at most _O(log N)_ to reorder the tree. The `peek()` returns the minimum `Node` in the heap, found always at index 1, thus taking constant time _O(1)_. All this is true if it is implemented correctly, but since the `MinHeap` is a massive bottleneck, there are some problems with this implementation.
+ The `MinHeap` replaces the `java.util.PriorityQueue`. As its name implies, it is an implementation of a minimum heap. Because it is a balanced binary tree, its height is _O(log N)_, where _N_ is the number of vertices, or `Nodes`, in the tree. As such, the operations `add(Node)` and `poll()` take at most _O(log N)_ to reorder the tree. The `peek()` returns the minimum `Node` in the heap, found always at index 1, thus taking constant time _O(1)_. All this is true if it is implemented correctly, but since the `MinHeap` is a massive bottleneck, there are possibly some problems with this implementation.
 
  ### `List`
  The array based `List` implementation offers only two functions, `add(Node)` and `get(int)`. Both work as expected, and in constant time _O(1)_.
@@ -72,15 +71,17 @@ The program has a very basic text UI, through which one can try finding shortest
 All benchmarking tests can be found in this class. The tests cover both the algorithms and the data structures. More on this topic [here](Testing.md).
 
 ## Possible improvements
-- Better benchmarking: both how it's done and what is tested. The benchmarking tests invlove some stupid hard coding. The tests could also propably be extended.
+- Better benchmarking: both how it's done and what is tested. The benchmarking tests involve some stupid hard coding. The tests could also propably be extended.
 - The program could be expanded to make better use of the pathfinding. Now it only enables pathfinding on five different 256x256 maps.
 - Better UI and UX.
-- Better unit testing.
 - A good implementation of `MinHeap`.
+- If the Jump Point Search is a failed implementation, an actual working implementation of it.
 
 ## Sources
-- 
-- 
-- 
-- 
-- 
+- http://users.cecs.anu.edu.au/~dharabor/data/papers/harabor-grastien-aaai11.pdf
+- https://zerowidth.com/2013/a-visual-explanation-of-jump-point-search.html
+- http://pages.cs.wisc.edu/~vernon/cs367/notes/11.PRIORITY-Q.html
+- https://www.aaai.org/ocs/index.php/SOCS/SOCS12/paper/viewFile/5396/5212
+- https://www.gamedev.net/tutorials/programming/artificial-intelligence/jump-point-search-fast-a-pathfinding-for-uniform-cost-grids-r4220/
+- https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
+- https://en.wikipedia.org/wiki/A*_search_algorithm 

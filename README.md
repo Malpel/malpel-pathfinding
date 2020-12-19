@@ -13,7 +13,8 @@
 ### [Testing](https://github.com/Malpel/malpel-pathfinding/blob/main/Documentation/Testing.md)
 
 ### [User guide](https://github.com/Malpel/malpel-pathfinding/blob/main/Documentation/User_guide.md)
-----
+
+
 ## Progress reports
 - [Progress report 1](https://github.com/Malpel/malpel-pathfinding/blob/main/Documentation/Progress_report_1.md)
 - [Progress report 2](https://github.com/Malpel/malpel-pathfinding/blob/main/Documentation/Progress_report_2.md)
