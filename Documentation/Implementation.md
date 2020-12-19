@@ -84,4 +84,5 @@ All benchmarking tests can be found in this class. The tests cover both the algo
 - https://www.aaai.org/ocs/index.php/SOCS/SOCS12/paper/viewFile/5396/5212
 - https://www.gamedev.net/tutorials/programming/artificial-intelligence/jump-point-search-fast-a-pathfinding-for-uniform-cost-grids-r4220/
 - https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
-- https://en.wikipedia.org/wiki/A*_search_algorithm 
+- https://en.wikipedia.org/wiki/A*_search_algorithm
+- https://materiaalit.github.io/intro-to-ai/part1/
