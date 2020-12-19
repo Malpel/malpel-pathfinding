@@ -89,14 +89,10 @@ public class MinHeap {
         int parent = endPointer / 2;
         int child = endPointer;
 
-        while (compare(arr[child], arr[parent]) < 0) {
+        while (parent > 0 && compare(arr[child], arr[parent]) < 0) {
             swap(child, parent);
             child = parent;
             parent = parent / 2;
-
-            if (parent < 1) {
-                break;
-            }
         }
     }
 
@@ -168,10 +164,6 @@ public class MinHeap {
 
 
     public int compare(Node node, Node t1) {
-        if (node == null || t1 == null) {
-            return 1;
-        }
-
         if ((node.getDistanceFromGoal() + node.getPathLength()) > (t1.getDistanceFromGoal() + t1.getPathLength())) {
             return 1;
         } else if ((node.getDistanceFromGoal() + node.getPathLength()) == (t1.getDistanceFromGoal() + t1.getPathLength())) {

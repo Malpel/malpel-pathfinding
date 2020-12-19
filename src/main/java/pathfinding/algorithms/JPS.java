@@ -203,10 +203,9 @@ public class JPS extends Pathfinder {
      * @param dx
      * The direction on the x-axis.
      * @param list
-     * The to which neighbors will added.
+     * To which neighbors will be added.
      */
     private void getNeighborsForDiagonal(int y, int x, int dy, int dx, List list) {
-        // natural neighbors
         if (map.isAccessible(y + dy, x)) {
             list.add(map.getNode(y + dy, x));
         }
@@ -215,7 +214,7 @@ public class JPS extends Pathfinder {
             list.add(map.getNode(y, x + dx));
         }
 
-        if ( (map.isAccessible(y + dy, x) && map.isAccessible(y, x + dx))) {
+        if ((map.isAccessible(y + dy, x) && map.isAccessible(y, x + dx))) {
             list.add(map.getNode(y + dy, x + dx));
         }
 
@@ -232,8 +231,9 @@ public class JPS extends Pathfinder {
      * @param dx
      * The direction on the x-axis.
      * @param list
-     * The to which neighbors will added.
+     * To which neighbors will be added.
      */
+    //CHECKSTYLE:OFF
     private void getNeighborsForCardinal(int y, int x, int dy, int dx, List list) {
         if (dy == 0) {
 
@@ -280,6 +280,7 @@ public class JPS extends Pathfinder {
             }
         }
     }
+    //CHECKSTYLE:ON
 
     @Override
     public String toString() {

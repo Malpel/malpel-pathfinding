@@ -10,8 +10,7 @@ import pathfinding.domain.Node;
 public abstract class Pathfinder {
 
     /**
-     *  A superclass for the pathfinding algorithms. Pathfinder takes care of checking
-     *  the starting and goal's validity (not null) as well as constructing the path.
+     *  A superclass for the pathfinding algorithms.
      */
     public Pathfinder() {
 

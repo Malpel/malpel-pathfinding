@@ -21,25 +21,40 @@ public class BenchmarkTest {
         // this is stupid
         try {
             MapReader mapReader = new MapReader();
-            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Berlin_0_256.map", 256), 6, 22, 255, 253, "Berlin_0_256"));
-            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Berlin_0_512.map", 512), 36, 32, 511, 510, "Berlin_0_512"));
-            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Berlin_0_1024.map", 1024), 3, 19, 1002, 1005, "Berlin_0_1024"));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Berlin_0_256.map", 256),
+                    6, 22, 255, 253, "Berlin_0_256", 371.62950897));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Berlin_0_512.map", 512),
+                    36, 32, 511, 510, "Berlin_0_512", 746.80317382));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Berlin_0_1024.map", 1024),
+                    3, 19, 1002, 1005, "Berlin_0_1024", 1539.80230712));
 
-            maps.add(new BenchmarkMap(mapReader.createNodeMap("/London_0_256.map", 256), 221, 32, 1, 122, "London_0_256"));
-            maps.add(new BenchmarkMap(mapReader.createNodeMap("/London_0_512.map", 512), 2, 227, 458, 54, "London_0_512"));
-            maps.add(new BenchmarkMap(mapReader.createNodeMap("/London_0_1024.map", 1024), 943, 257, 37, 411, "London_0_1024"));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/London_0_256.map", 256),
+                    221, 32, 1, 122, "London_0_256", 399.67113952));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/London_0_512.map", 512),
+                    2, 227, 458, 54, "London_0_512", 831.07020111));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/London_0_1024.map", 1024),
+                    943, 257, 37, 411, "London_0_1024", 1603.75562591));
 
-            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Moscow_1_256.map", 256), 144, 11, 7, 255, "Moscow_1_256"));
-            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Moscow_1_512.map", 512), 273, 15, 494, 501, "Moscow_1_512"));
-            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Moscow_1_1024.map", 1024), 43, 896, 1023, 1, "Moscow_1_1024"));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Moscow_1_256.map", 256),
+                    144, 11, 7, 255, "Moscow_1_256", 439.96046142));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Moscow_1_512.map", 512),
+                    273, 15, 494, 501, "Moscow_1_512", 787.51385192));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Moscow_1_1024.map", 1024),
+                    43, 896, 1023, 1, "Moscow_1_1024", 1546.84898833));
 
-            maps.add(new BenchmarkMap(mapReader.createNodeMap("/NewYork_0_256.map", 256), 252, 252, 31, 7, "NewYork_0_256"));
-            maps.add(new BenchmarkMap(mapReader.createNodeMap("/NewYork_0_512.map", 512), 443, 509, 9, 0, "NewYork_0_512"));
-            maps.add(new BenchmarkMap(mapReader.createNodeMap("/NewYork_0_1024.map", 1024), 22, 97, 1022, 996, "NewYork_0_1024"));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/NewYork_0_256.map", 256),
+                    252, 252, 31, 7, "NewYork_0_256", 362.90158691));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/NewYork_0_512.map", 512),
+                    443, 509, 9, 0, "NewYork_0_512", 714.54328918));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/NewYork_0_1024.map", 1024),
+                    22, 97, 1022, 996, "NewYork_0_1024", 1467.27539519));
 
-            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Paris_0_256.map", 256), 243, 242, 18, 6, "Paris_0_256"));
-            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Paris_0_512.map", 512), 64, 45, 511, 484, "Paris_0_512"));
-            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Paris_0_1024.map", 1024), 992, 994, 33, 6, "Paris_0_1024"));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Paris_0_256.map", 256),
+                    243, 242, 18, 6, "Paris_0_256", 390.30360718));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Paris_0_512.map", 512),
+                    64, 45, 511, 484, "Paris_0_512", 723.61940765));
+            maps.add(new BenchmarkMap(mapReader.createNodeMap("/Paris_0_1024.map", 1024),
+                    992, 994, 33, 6, "Paris_0_1024", 1527.81955108));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -50,10 +65,11 @@ public class BenchmarkTest {
 
         for (BenchmarkMap map : maps) {
             System.out.println("Map: " + map.getName());
+            System.out.println("Path length: " + map.getPathLength());
             System.out.println();
-            benchmarkAlgorithm(runs, new Dijkstra(), map.getNodeMap(), map.getStart(), map.getGoal());
-            benchmarkAlgorithm(runs, new Astar(), map.getNodeMap(), map.getStart(), map.getGoal());
-            benchmarkAlgorithm(runs, new JPS(map.getNodeMap()), map.getNodeMap(), map.getStart(), map.getGoal());
+            benchmarkAlgorithm(runs, new Dijkstra(), map.getNodeMap(), map.getStart(), map.getGoal(), map.getPathLength());
+            benchmarkAlgorithm(runs, new Astar(), map.getNodeMap(), map.getStart(), map.getGoal(), map.getPathLength());
+            benchmarkAlgorithm(runs, new JPS(map.getNodeMap()), map.getNodeMap(), map.getStart(), map.getGoal(), map.getPathLength());
         }
 
     }
@@ -72,7 +88,7 @@ public class BenchmarkTest {
      * @param goal
      * The goal Node of the path.
      */
-    private void benchmarkAlgorithm(int runs, Pathfinder pathfinder, NodeMap nodeMap, Node start, Node goal) {
+    private void benchmarkAlgorithm(int runs, Pathfinder pathfinder, NodeMap nodeMap, Node start, Node goal, double pathLength) {
         long[] times = new long[runs];
         long t;
 
@@ -196,7 +212,7 @@ public class BenchmarkTest {
 
     /**
      * This is fairly redundant, since this project's implementation of the list
-     * data structure only has the constant time add() function. Nevertheless, its test
+     * data structure only has the constant time add(Node) and get(int) functions. Nevertheless, its test
      * is still included.
      */
     private void benchmarkList(int runs, int n) {

@@ -1,7 +1,7 @@
 package pathfinding.domain;
 
 /**
- * Implementation of the list datastructure.
+ * Implementation of the list data structure.
  */
 public class List {
 
@@ -9,7 +9,7 @@ public class List {
     private int endPointer;
 
     /**
-     * Implementation of the list datastructure.
+     * Implementation of the list data structure.
      */
     public List() {
         arr = new Node[10];

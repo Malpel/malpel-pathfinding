@@ -61,7 +61,7 @@ public class ConsoleUi {
 
                     BenchmarkTest benchmarkTest = new BenchmarkTest();
                     System.out.println("Algorithms: ");
-                    benchmarkTest.benchmarkAlgorithms(10);
+                    benchmarkTest.benchmarkAlgorithms(100);
                     System.out.println("--------------------------------------------------");
                     System.out.println("Data structures: ");
                     System.out.println();
@@ -169,6 +169,7 @@ public class ConsoleUi {
         System.out.println("1) Dijkstra");
         System.out.println("2) A*");
         System.out.println("3) Jump point search");
+        System.out.print("Enter a number (1-3): ");
 
         String input = scanner.nextLine();
 
