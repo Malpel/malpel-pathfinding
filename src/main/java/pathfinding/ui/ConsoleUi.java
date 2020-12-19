@@ -103,19 +103,19 @@ public class ConsoleUi {
 
             switch (input) {
                 case "1":
-                    filename = "/Berlin_0_256.map";
+                    filename = "Berlin_0_256.map";
                     break label;
                 case "2":
-                    filename = "/London_0_256.map";
+                    filename = "London_0_256.map";
                     break label;
                 case "3":
-                    filename = "/Moscow_1_256.map";
+                    filename = "Moscow_1_256.map";
                     break label;
                 case "4":
-                    filename = "/NewYork_0_256.map";
+                    filename = "NewYork_0_256.map";
                     break label;
                 case "5":
-                    filename = "/Paris_0_256.map";
+                    filename = "Paris_0_256.map";
                     break label;
                 default:
                     System.out.println();
@@ -155,7 +155,9 @@ public class ConsoleUi {
             goal = nodeMap.getNode(Integer.parseInt(goalCoords[1]), Integer.parseInt(goalCoords[0]));
 
             if (!validStart || !validGoal) {
+                System.out.println();
                 System.out.println("No possible path between these points");
+                System.out.println();
             } else {
                 break;
             }

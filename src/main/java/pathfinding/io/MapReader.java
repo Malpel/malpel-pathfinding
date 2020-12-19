@@ -29,7 +29,7 @@ public class MapReader {
      */
     public NodeMap createNodeMap(String filename, int mapSize) throws IOException {
         NodeMap nodeMap = new NodeMap(mapSize, mapSize);
-        File file = new File(getClass().getResource(filename).getFile());
+        File file = new File("maps/" + filename);
         BufferedReader br = new BufferedReader(new FileReader(file));
         String st;
         int index = 0;
