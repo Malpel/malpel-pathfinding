@@ -3,7 +3,7 @@
 ## Running the program
 
  ### The jar:
-The `malpel-pathfinding.jar` file can be downloaded [here](https://github.com/Malpel/malpel-pathfinding/releases/tag/v1.0-final). To run the program successfully the file has to be in the same folder as the folder `maps`, which comes with the source code and can be found directly in the project root. Once the jar is in place, double click the file, or launch the program through command line with `java -jar malpel-pathfinding.jar`.
+The `malpel-pathfinding.jar` file can be downloaded [here](https://github.com/Malpel/malpel-pathfinding/releases/tag/v1.0-final). To run the program successfully the file has to be in the same folder as the folder `maps`, which comes with the source code and can be found directly in the project root. Once the jar is in place, double click the file, or launch the program through the command line with `java -jar malpel-pathfinding.jar`.
 
 ## UI
 
