@@ -31,7 +31,6 @@ The algorithms' performances was tested on five different maps of three differen
 
  A major hindrance for the algorithms is the `MinHeap` implementation, which, regardless of good benchmarking results, is in practice massively slower than `java.util.PriorityQueue`. With Java's PriorityQueue<> the times for smaller maps, for example, drop below one millisecond.
 
----------------------------------------------------
  ### Data structures
 
  The performance of data structures was tested by doing a 1000 runs of 10000 additions, pollings, and gets. The times are the median in nanoseconds.
